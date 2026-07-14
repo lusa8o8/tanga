@@ -2,6 +2,7 @@ import { getApps, initializeApp, cert } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
+import { MockAdminAuth, MockDbImpl, MockAdminStorage } from './mock-db';
 
 const isPlaceholder = 
   !process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 
@@ -14,7 +15,6 @@ let adminDb: any;
 let adminStorage: any;
 
 if (isPlaceholder) {
-  const { MockAdminAuth, MockDbImpl, MockAdminStorage } = require('./mock-db');
   adminAuth = new MockAdminAuth();
   adminDb = new MockDbImpl();
   adminStorage = new MockAdminStorage();
@@ -42,7 +42,6 @@ if (isPlaceholder) {
     } catch (error) {
       console.error('Firebase Admin initialization error:', error);
       // Fallback to mock so the app doesn't crash the server component render
-      const { MockAdminAuth, MockDbImpl, MockAdminStorage } = require('./mock-db');
       adminAuth = new MockAdminAuth();
       adminDb = new MockDbImpl();
       adminStorage = new MockAdminStorage();
