@@ -46,17 +46,12 @@ export default async function Home() {
         <h2 className="font-sans text-xs font-semibold tracking-widest uppercase mb-8 text-muted-foreground">
           Browse by Language
         </h2>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-6">
           {languages.map((lang: any) => (
-            <Link 
-              key={lang.id} 
-              href={`/catalog?language=${encodeURIComponent(lang.name)}`} 
-              className="px-6 py-2 rounded-full text-sm font-medium text-white transition-opacity hover:opacity-90" 
-              style={{ 
-                backgroundColor: lang.name === 'Kiikaonde' ? 'hsl(var(--tag-kiikaonde))' 
-                               : lang.name.includes('Tonga') ? 'hsl(var(--tag-tonga))' 
-                               : '#78716c' // stone-500 default for new languages
-              }}
+            <Link
+              key={lang.id}
+              href={`/catalog?language=${encodeURIComponent(lang.name)}`}
+              className="font-serif text-lg text-primary hover:text-muted-foreground transition-colors duration-200"
             >
               {lang.name}
             </Link>
@@ -75,17 +70,18 @@ export default async function Home() {
             <Link key={book.id} href={`/books/${book.slug}`} className="group block">
               <div className="aspect-[2/3] bg-muted mb-6 overflow-hidden">
                 {book.coverImageUrl ? (
-                  <img src={book.coverImageUrl} alt={book.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={book.coverImageUrl} alt={book.title} className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-85" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-muted-foreground font-serif p-4 text-center">No Cover</div>
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-8 h-8 opacity-20" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                  </div>
                 )}
               </div>
-              <h3 className="font-serif text-lg leading-snug mb-1 group-hover:text-muted-foreground transition-colors">{book.title}</h3>
-              <p className="text-muted-foreground text-sm mb-3">{book.authorName}</p>
-              <span 
-                className="inline-block px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold text-white" 
-                style={{ backgroundColor: book.language === 'Kiikaonde' ? 'hsl(var(--tag-kiikaonde))' : 'hsl(var(--tag-tonga))' }}
-              >
+              <h3 className="font-serif text-lg leading-snug mb-1 group-hover:text-muted-foreground transition-colors duration-200">{book.title}</h3>
+              <p className="text-muted-foreground text-sm mb-2">{book.authorName}</p>
+              <span className="text-[10px] uppercase tracking-widest font-medium" style={{ color: 'hsl(var(--tag-language-text))' }}>
                 {book.language}
               </span>
             </Link>
