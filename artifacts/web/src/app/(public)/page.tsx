@@ -18,10 +18,16 @@ async function getLanguages() {
   return snapshot.docs.map((doc: any) => ({ id: doc.id, ...(doc.data() as any) }));
 }
 
+async function getAuthorsSubset() {
+  const snapshot = await adminDb.collection('authors').orderBy('name').limit(4).get();
+  return snapshot.docs.map((doc: any) => ({ id: doc.id, ...(doc.data() as any) }));
+}
+
 export default async function Home() {
-  const [featuredBooks, languages] = await Promise.all([
+  const [featuredBooks, languages, authors] = await Promise.all([
     getFeaturedBooks(),
-    getLanguages()
+    getLanguages(),
+    getAuthorsSubset()
   ]);
 
   return (
@@ -136,6 +142,47 @@ export default async function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+      {/* Meet the Authors */}
+      <section className="border-t border-border pt-24 md:pt-32 pb-8 flex flex-col items-center">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl font-serif text-primary mb-6">Meet the Authors</h2>
+          <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80 block">
+            The Architects of Our Heritage
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16 w-full">
+          {authors.map((author: any) => (
+            <Link key={author.id} href={`/authors/${author.slug}`} className="group flex flex-col items-center text-center">
+              <div className="aspect-square w-full max-w-[200px] bg-muted overflow-hidden border border-border rounded-full grayscale group-hover:grayscale-0 transition-all duration-500 mb-6 mx-auto">
+                {author.photoUrl ? (
+                  <img
+                    src={author.photoUrl}
+                    alt={author.name}
+                    className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                    style={{ objectPosition: author.photoPosition || "center" }}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-8 h-8 opacity-20" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <h3 className="font-serif text-xl text-primary mb-2 group-hover:opacity-80 transition-opacity">
+                {author.name}
+              </h3>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <Link href="/authors" className="inline-flex items-center text-sm font-medium hover:text-primary transition-colors text-muted-foreground">
+            View all authors <span aria-hidden="true" className="ml-2">&rarr;</span>
+          </Link>
         </div>
       </section>
     </div>

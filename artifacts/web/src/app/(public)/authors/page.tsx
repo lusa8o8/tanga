@@ -14,11 +14,11 @@ export default async function AuthorsIndex() {
 
   return (
     <div className="flex flex-col gap-16">
-      <div className="max-w-2xl">
-        <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6">Our Authors</h1>
-        <p className="text-lg text-muted-foreground leading-relaxed">
-          The voices preserving and enriching the literature of Zambia's indigenous languages.
-        </p>
+      <div className="flex flex-col items-center text-center mt-8 mb-8">
+        <h1 className="text-5xl md:text-6xl font-serif text-primary mb-6">Meet the Authors</h1>
+        <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80 block max-w-xl">
+          The Architects of Our Heritage
+        </span>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16">
