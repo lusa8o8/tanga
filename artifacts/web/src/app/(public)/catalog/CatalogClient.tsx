@@ -61,7 +61,7 @@ export default function CatalogClient({ initialBooks }: { initialBooks: Book[] }
   return (
     <div className="flex flex-col gap-12">
       <div>
-        <h1 className="text-4xl font-serif text-primary mb-4">Catalog</h1>
+        <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6">Catalog</h1>
         <p className="text-muted-foreground text-lg">Browse our complete collection of titles.</p>
       </div>
 

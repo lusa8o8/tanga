@@ -96,7 +96,7 @@ export default function Inquiry() {
   if (successMsg) {
     return (
       <div className="max-w-xl py-12">
-        <h1 className="text-4xl font-serif text-primary mb-6">Thank You</h1>
+        <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6">Thank You</h1>
         <p className="text-lg text-muted-foreground">{successMsg}</p>
       </div>
     );
@@ -104,7 +104,7 @@ export default function Inquiry() {
 
   return (
     <div className="max-w-xl">
-      <h1 className="text-4xl font-serif text-primary mb-8">Inquiry</h1>
+      <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6">Inquiry</h1>
       
       <div className="flex items-center gap-6 mb-12 border-b border-border pb-6">
         <button
