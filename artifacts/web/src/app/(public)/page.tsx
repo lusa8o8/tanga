@@ -81,7 +81,7 @@ export default async function Home() {
           </div>
 
           <div className="md:col-span-4 flex flex-col items-end text-right">
-            <h2 className="text-4xl md:text-5xl font-serif text-primary mb-4">Our Languages</h2>
+            <h2 className="text-4xl md:text-5xl font-serif text-primary mb-4">Featured Languages</h2>
             <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80">
               Browse by Language
             </span>
