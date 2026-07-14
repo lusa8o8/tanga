@@ -38,15 +38,20 @@ export class MockQuery {
     private collectionName: string,
     private db: MockDbImpl,
     private filters: Array<{ field: string, op: string, value: any }> = [],
-    private limitVal?: number
+    private limitVal?: number,
+    private sorts: Array<{ field: string, direction: 'asc' | 'desc' }> = []
   ) {}
 
   where(field: string, op: string, value: any) {
-    return new MockQuery(this.collectionName, this.db, [...this.filters, { field, op, value }], this.limitVal);
+    return new MockQuery(this.collectionName, this.db, [...this.filters, { field, op, value }], this.limitVal, this.sorts);
   }
 
   limit(n: number) {
-    return new MockQuery(this.collectionName, this.db, this.filters, n);
+    return new MockQuery(this.collectionName, this.db, this.filters, n, this.sorts);
+  }
+
+  orderBy(field: string, direction: 'asc' | 'desc' = 'asc') {
+    return new MockQuery(this.collectionName, this.db, this.filters, this.limitVal, [...this.sorts, { field, direction }]);
   }
 
   async get() {
@@ -59,6 +64,17 @@ export class MockQuery {
         return true;
       });
     }
+
+    for (const sort of this.sorts) {
+      items = items.sort((a, b) => {
+        const aVal = a[sort.field];
+        const bVal = b[sort.field];
+        if (aVal < bVal) return sort.direction === 'asc' ? -1 : 1;
+        if (aVal > bVal) return sort.direction === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+
     if (this.limitVal !== undefined) {
       items = items.slice(0, this.limitVal);
     }
@@ -81,6 +97,10 @@ export class MockCollectionReference {
 
   limit(n: number) {
     return new MockQuery(this.collectionName, this.db, [], n);
+  }
+
+  orderBy(field: string, direction: 'asc' | 'desc' = 'asc') {
+    return new MockQuery(this.collectionName, this.db, [], undefined, [{ field, direction }]);
   }
 
   async get() {
