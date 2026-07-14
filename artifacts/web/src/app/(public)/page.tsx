@@ -27,20 +27,33 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-20 md:gap-28">
       {/* Hero Section */}
-      <section className="max-w-2xl pt-16 md:pt-24">
-        <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.15] mb-8">
-          Preserving Heritage, One Page at a Time.
-        </h1>
-        <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-sm">
-          Publishing books in Kiikaonde and Tonga that preserve language, culture, and history for future generations.
-        </p>
-        <div className="flex flex-wrap items-center gap-4">
-          <Button asChild size="lg" className="rounded-none px-8">
-            <Link href="/catalog">Browse the Catalog</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-primary/5 px-8">
-            <Link href="/bulk-orders">Inquire About Bulk Orders</Link>
-          </Button>
+      <section className="relative pt-16 md:pt-24">
+        {/* Experimental Background Texture */}
+        <div 
+          className="absolute inset-0 overflow-hidden pointer-events-none select-none flex justify-end items-start opacity-[0.03]"
+          aria-hidden="true"
+        >
+          <div className="font-serif text-[12rem] lg:text-[18rem] leading-[0.75] text-primary text-right -mr-12 md:-mr-24 -mt-8 tracking-tighter">
+            Heritage<br />
+            Language
+          </div>
+        </div>
+
+        <div className="max-w-2xl relative z-10">
+          <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.15] mb-8">
+            Preserving Heritage, One Page at a Time.
+          </h1>
+          <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-sm">
+            Publishing books in Kiikaonde and Tonga that preserve language, culture, and history for future generations.
+          </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <Button asChild size="lg" className="rounded-none px-8">
+              <Link href="/catalog">Browse the Catalog</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-primary/5 px-8">
+              <Link href="/bulk-orders">Inquire About Bulk Orders</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
