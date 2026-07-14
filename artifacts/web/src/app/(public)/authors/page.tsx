@@ -16,8 +16,8 @@ export default async function AuthorsIndex() {
     <div className="flex flex-col gap-16">
       <div className="flex flex-col items-center text-center mt-8 mb-8">
         <h1 className="text-5xl md:text-6xl font-serif text-primary mb-6">Meet the Authors</h1>
-        <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80 block max-w-xl">
-          The Architects of Our Heritage
+        <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80">
+          Our Writers & Scholars
         </span>
       </div>
 

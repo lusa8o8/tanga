@@ -152,10 +152,10 @@ export default async function Home() {
       </section>
       {/* Meet the Authors */}
       <section className="border-t border-border pt-24 md:pt-32 pb-8 flex flex-col items-center">
-        <div className="text-center mb-16">
+        <div className="flex flex-col items-center mb-16">
           <h2 className="text-5xl md:text-6xl font-serif text-primary mb-6">Meet the Authors</h2>
           <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80 block">
-            The Architects of Our Heritage
+            Our Writers & Scholars
           </span>
         </div>
 
