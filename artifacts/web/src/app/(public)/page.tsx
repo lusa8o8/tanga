@@ -135,11 +135,6 @@ export default async function Home() {
               <p>
                 From complex grammatical studies to vibrant collections of folklore and modern narratives, our catalog is a testament to the intellectual richness of the Kiikaonde-speaking community. We are more than just a publisher; we are a cultural archive in motion.
               </p>
-              <div className="pt-4">
-                <Link href="/about" className="inline-flex items-center text-sm font-medium hover:text-primary transition-colors text-muted-foreground">
-                  Read our full story <span aria-hidden="true" className="ml-2">&rarr;</span>
-                </Link>
-              </div>
             </div>
           </div>
         </div>
@@ -177,12 +172,6 @@ export default async function Home() {
               </h3>
             </Link>
           ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <Link href="/authors" className="inline-flex items-center text-sm font-medium hover:text-primary transition-colors text-muted-foreground">
-            View all authors <span aria-hidden="true" className="ml-2">&rarr;</span>
-          </Link>
         </div>
       </section>
     </div>
