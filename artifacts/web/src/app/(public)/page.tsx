@@ -27,18 +27,18 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-32 md:gap-40">
       {/* Hero Section */}
-      <section className="max-w-3xl pt-8 md:pt-16">
-        <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.1] mb-8 pr-4 md:pr-8">
+      <section className="max-w-2xl pt-16 md:pt-24">
+        <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.15] mb-8">
           Preserving Heritage, One Page at a Time.
         </h1>
-        <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-14 max-w-xl font-serif">
+        <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-sm">
           Publishing books in Kiikaonde and Tonga that preserve language, culture, and history for future generations.
         </p>
-        <div className="flex flex-wrap items-center gap-6">
-          <Button asChild size="lg" className="rounded-none px-10 h-14 text-base">
+        <div className="flex flex-wrap items-center gap-4">
+          <Button asChild size="lg" className="rounded-none px-8">
             <Link href="/catalog">Browse the Catalog</Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-primary/5 px-10 h-14 text-base">
+          <Button asChild size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-primary/5 px-8">
             <Link href="/bulk-orders">Inquire About Bulk Orders</Link>
           </Button>
         </div>
@@ -83,8 +83,11 @@ export default async function Home() {
                 )}
               </div>
               <h3 className="font-serif text-lg leading-snug mb-2 group-hover:text-muted-foreground transition-colors duration-200">{book.title}</h3>
-              <p className="text-muted-foreground text-sm mb-4">{book.authorName}</p>
-              <span className="text-[10px] uppercase tracking-[0.15em] font-medium" style={{ color: 'hsl(var(--tag-language-text))' }}>
+              <p className="text-muted-foreground text-sm mb-3">{book.authorName}</p>
+              <span
+                className="inline-block px-2.5 py-0.5 text-[10px] uppercase tracking-wider font-medium text-white rounded-sm"
+                style={{ backgroundColor: book.language === 'Kiikaonde' ? 'hsl(var(--tag-kiikaonde))' : book.language?.includes('Tonga') ? 'hsl(var(--tag-tonga))' : 'hsl(var(--tag-language-text))' }}
+              >
                 {book.language}
               </span>
             </Link>

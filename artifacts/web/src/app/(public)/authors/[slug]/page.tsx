@@ -79,7 +79,10 @@ export default async function AuthorDetail(props: { params: Promise<{ slug: stri
                   )}
                 </div>
                 <h3 className="font-serif text-lg leading-snug mb-1 group-hover:text-muted-foreground transition-colors duration-200">{book.title}</h3>
-                <span className="text-[10px] uppercase tracking-widest font-medium mt-2 block" style={{ color: 'hsl(var(--tag-language-text))' }}>
+                <span
+                  className="inline-block px-2.5 py-0.5 text-[10px] uppercase tracking-wider font-medium text-white rounded-sm mt-2"
+                  style={{ backgroundColor: book.language === 'Kiikaonde' ? 'hsl(var(--tag-kiikaonde))' : book.language?.includes('Tonga') ? 'hsl(var(--tag-tonga))' : 'hsl(var(--tag-language-text))' }}
+                >
                   {book.language}
                 </span>
               </Link>

@@ -109,8 +109,10 @@
   --status-published: 90 11% 61%; /* #9CA88F muted sage */
   --status-draft: 36 49% 67%; /* #D4B483 muted amber */
 
-  /* Language tags: quiet metadata treatment — no background color, text only */
-  --tag-language-text: 34 8% 45%; /* slightly darker than muted-foreground for legibility */
+  /* Language tags: muted pill treatment — quiet enough to not compete with covers */
+  --tag-kiikaonde: 9 20% 60%;    /* muted dusty rose */
+  --tag-tonga: 210 10% 60%;      /* muted slate blue-grey */
+  --tag-language-text: 34 8% 45%; /* fallback for unknown languages */
 }
 
 @layer base {

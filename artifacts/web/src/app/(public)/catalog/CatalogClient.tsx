@@ -135,8 +135,11 @@ export default function CatalogClient({ initialBooks }: { initialBooks: Book[] }
                   )}
                 </div>
                 <h3 className="font-serif text-lg leading-snug mb-1 group-hover:text-muted-foreground transition-colors duration-200">{book.title}</h3>
-                <p className="text-muted-foreground text-sm mb-2">{book.authorName}</p>
-                <span className="text-[10px] uppercase tracking-widest font-medium" style={{ color: 'hsl(var(--tag-language-text))' }}>
+                <p className="text-muted-foreground text-sm mb-3">{book.authorName}</p>
+                <span
+                  className="inline-block px-2.5 py-0.5 text-[10px] uppercase tracking-wider font-medium text-white rounded-sm"
+                  style={{ backgroundColor: book.language === 'Kiikaonde' ? 'hsl(var(--tag-kiikaonde))' : book.language?.includes('Tonga') ? 'hsl(var(--tag-tonga))' : 'hsl(var(--tag-language-text))' }}
+                >
                   {book.language}
                 </span>
               </Link>
