@@ -106,18 +106,18 @@ export default function Inquiry() {
     <div className="max-w-xl">
       <h1 className="text-4xl font-serif text-primary mb-8">Inquiry</h1>
       
-      <div className="flex gap-2 mb-12 p-1 bg-muted/30 rounded-full w-fit">
-        <button 
+      <div className="flex items-center gap-6 mb-12 border-b border-border pb-6">
+        <button
           type="button"
           onClick={() => setType("school")}
-          className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${type === 'school' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+          className={`text-sm transition-colors duration-200 pb-px ${type === 'school' ? 'text-primary font-medium border-b border-primary' : 'text-muted-foreground hover:text-foreground'}`}
         >
           School / Institution
         </button>
-        <button 
+        <button
           type="button"
           onClick={() => setType("individual")}
-          className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${type === 'individual' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+          className={`text-sm transition-colors duration-200 pb-px ${type === 'individual' ? 'text-primary font-medium border-b border-primary' : 'text-muted-foreground hover:text-foreground'}`}
         >
           Individual
         </button>
