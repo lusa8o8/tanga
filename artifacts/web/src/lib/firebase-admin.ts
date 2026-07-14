@@ -35,13 +35,23 @@ if (isPlaceholder) {
         }),
         storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
       });
+      
+      adminAuth = getAuth();
+      adminDb = getFirestore();
+      adminStorage = getStorage();
     } catch (error) {
-      console.error('Firebase Admin initialization error', error);
+      console.error('Firebase Admin initialization error:', error);
+      // Fallback to mock so the app doesn't crash the server component render
+      const { MockAdminAuth, MockDbImpl, MockAdminStorage } = require('./mock-db');
+      adminAuth = new MockAdminAuth();
+      adminDb = new MockDbImpl();
+      adminStorage = new MockAdminStorage();
     }
+  } else {
+    adminAuth = getAuth();
+    adminDb = getFirestore();
+    adminStorage = getStorage();
   }
-  adminAuth = getAuth();
-  adminDb = getFirestore();
-  adminStorage = getStorage();
 }
 
 export { adminAuth, adminDb, adminStorage };
