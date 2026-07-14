@@ -25,25 +25,28 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="flex flex-col gap-24">
+    <div className="flex flex-col gap-32 md:gap-40">
       {/* Hero Section */}
-      <section className="max-w-3xl">
-        <h1 className="text-5xl md:text-6xl font-serif text-primary leading-tight mb-8">
+      <section className="max-w-3xl pt-8 md:pt-16">
+        <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.1] mb-8 pr-4 md:pr-8">
           Preserving Heritage, One Page at a Time.
         </h1>
-        <div className="flex items-center gap-4">
-          <Button asChild size="lg" className="rounded-none">
+        <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-14 max-w-xl font-serif">
+          Publishing books in Kiikaonde and Tonga that preserve language, culture, and history for future generations.
+        </p>
+        <div className="flex flex-wrap items-center gap-6">
+          <Button asChild size="lg" className="rounded-none px-10 h-14 text-base">
             <Link href="/catalog">Browse the Catalog</Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-primary/5">
+          <Button asChild size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-primary/5 px-10 h-14 text-base">
             <Link href="/bulk-orders">Inquire About Bulk Orders</Link>
           </Button>
         </div>
       </section>
 
       {/* Browse by Language */}
-      <section className="border-t border-border pt-12">
-        <h2 className="font-sans text-xs font-semibold tracking-widest uppercase mb-8 text-muted-foreground">
+      <section className="border-t border-border pt-16 md:pt-20">
+        <h2 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-12 text-muted-foreground/80">
           Browse by Language
         </h2>
         <div className="flex flex-wrap gap-6">
@@ -60,15 +63,15 @@ export default async function Home() {
       </section>
 
       {/* Featured Books */}
-      <section className="border-t border-border pt-12">
-        <h2 className="font-sans text-xs font-semibold tracking-widest uppercase mb-12 text-muted-foreground">
+      <section className="border-t border-border pt-16 md:pt-20">
+        <h2 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-16 text-muted-foreground/80">
           Featured Books
         </h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12">
           {featuredBooks?.map((book: any) => (
             <Link key={book.id} href={`/books/${book.slug}`} className="group block">
-              <div className="aspect-[2/3] bg-muted mb-6 overflow-hidden">
+              <div className="aspect-[2/3] bg-muted mb-8 overflow-hidden">
                 {book.coverImageUrl ? (
                   <img src={book.coverImageUrl} alt={book.title} className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-85" />
                 ) : (
@@ -79,9 +82,9 @@ export default async function Home() {
                   </div>
                 )}
               </div>
-              <h3 className="font-serif text-lg leading-snug mb-1 group-hover:text-muted-foreground transition-colors duration-200">{book.title}</h3>
-              <p className="text-muted-foreground text-sm mb-2">{book.authorName}</p>
-              <span className="text-[10px] uppercase tracking-widest font-medium" style={{ color: 'hsl(var(--tag-language-text))' }}>
+              <h3 className="font-serif text-lg leading-snug mb-2 group-hover:text-muted-foreground transition-colors duration-200">{book.title}</h3>
+              <p className="text-muted-foreground text-sm mb-4">{book.authorName}</p>
+              <span className="text-[10px] uppercase tracking-[0.15em] font-medium" style={{ color: 'hsl(var(--tag-language-text))' }}>
                 {book.language}
               </span>
             </Link>
