@@ -12,7 +12,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (data.name) {
       const booksSnapshot = await adminDb.collection('books').where('authorId', '==', id).get();
       const batch = adminDb.batch();
-      booksSnapshot.forEach(doc => {
+      booksSnapshot.forEach((doc: any) => {
         batch.update(doc.ref, { authorName: data.name });
       });
       await batch.commit();
