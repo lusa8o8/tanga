@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://taanga-taanga.com"),
   title: "Taanga-Taanga Publishers Limited | Zambian Language Books",
   description: "Discover and explore books written in Zambia's local languages — Kiikaonde, Tonga, and more. Preserving culture through literature.",
   icons: {
