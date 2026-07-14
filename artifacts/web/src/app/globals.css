@@ -85,7 +85,7 @@
   --secondary-foreground: 30 8% 15%;
 
   --muted: 41 19% 82%; 
-  --muted-foreground: 34 8% 51%; /* #8C8378 soft grey */
+  --muted-foreground: 34 8% 42%; /* #786F65 darker soft grey for better contrast */
 
   --accent: 30 8% 15%; 
   --accent-foreground: 40 25% 94%;
