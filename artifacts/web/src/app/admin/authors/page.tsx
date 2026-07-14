@@ -58,7 +58,12 @@ export default function AdminAuthorsList() {
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="font-serif text-lg mb-1 truncate">{author.name}</div>
+                <div className="font-serif text-lg mb-1 flex items-center gap-3">
+                  <span className="truncate">{author.name}</span>
+                  {author.featured && (
+                    <span className="inline-block px-2 py-0.5 bg-primary/10 text-primary text-[10px] uppercase tracking-wider font-medium rounded-sm">Featured</span>
+                  )}
+                </div>
                 <div className="text-muted-foreground text-sm">{author.bookCount ?? 0} {author.bookCount === 1 ? "book" : "books"}</div>
               </div>
               <div className="flex items-center gap-6 shrink-0">

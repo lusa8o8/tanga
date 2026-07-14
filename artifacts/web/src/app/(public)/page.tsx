@@ -9,6 +9,7 @@ async function getFeaturedBooks() {
   const snapshot = await adminDb.collection('books')
     .where('status', '==', 'published')
     .where('featured', '==', true)
+    .limit(4)
     .get();
   return snapshot.docs.map((doc: any) => ({ id: doc.id, ...(doc.data() as any) }));
 }
@@ -19,7 +20,10 @@ async function getLanguages() {
 }
 
 async function getAuthorsSubset() {
-  const snapshot = await adminDb.collection('authors').orderBy('name').limit(4).get();
+  const snapshot = await adminDb.collection('authors')
+    .where('featured', '==', true)
+    .limit(4)
+    .get();
   return snapshot.docs.map((doc: any) => ({ id: doc.id, ...(doc.data() as any) }));
 }
 

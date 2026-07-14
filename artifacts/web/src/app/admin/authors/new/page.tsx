@@ -88,7 +88,8 @@ export default function AdminAuthorsForm() {
       name: fd.get("name") as string,
       bio: (fd.get("bio") as string) || undefined,
       photoUrl: photoUrl || undefined,
-      photoPosition: `${photoX}% ${photoY}%`
+      photoPosition: `${photoX}% ${photoY}%`,
+      featured: fd.get("featured") === "on"
     };
 
     if (id) {
@@ -175,6 +176,19 @@ export default function AdminAuthorsForm() {
           <div className="space-y-2">
             <label className="text-xs text-muted-foreground uppercase tracking-widest font-medium">Biography</label>
             <Textarea name="bio" defaultValue={existingAuthor?.bio || ""} className="min-h-[200px]" />
+          </div>
+
+          <div className="flex items-center gap-3 py-4 border-y border-border">
+            <input 
+              type="checkbox" 
+              name="featured" 
+              id="featured"
+              defaultChecked={existingAuthor?.featured || false}
+              className="w-5 h-5 accent-primary cursor-pointer"
+            />
+            <label htmlFor="featured" className="text-sm font-medium cursor-pointer">
+              Feature this author on the homepage
+            </label>
           </div>
 
           <div className="flex gap-4 pt-4 border-t border-border mt-4">
