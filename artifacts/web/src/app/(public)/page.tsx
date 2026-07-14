@@ -107,6 +107,37 @@ export default async function Home() {
           ))}
         </div>
       </section>
+
+      {/* Our Story */}
+      <section className="border-t border-border pt-12 md:pt-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
+          <div className="md:col-span-4 flex flex-col">
+            <h2 className="text-4xl md:text-5xl font-serif text-primary mb-4">Our Story</h2>
+            <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80">
+              A Legacy of Language
+            </span>
+          </div>
+          
+          <div className="md:col-span-8 md:col-start-6 max-w-2xl border-l border-border pl-6 md:pl-10">
+            <div className="space-y-6 text-muted-foreground leading-relaxed">
+              <p className="font-serif italic text-lg text-primary">
+                "Language is the soul of a people. Without our written word, our history is a fading echo."
+              </p>
+              <p>
+                Taanga-Taanga Publishers Ltd. was founded with a singular, unwavering mission: to safeguard the Kiikaonde language through high-quality, accessible literature. In an era of global homogenization, we serve as the stewards of regional identity, providing a platform for local authors to capture the nuances of our culture, traditions, and linguistics.
+              </p>
+              <p>
+                From complex grammatical studies to vibrant collections of folklore and modern narratives, our catalog is a testament to the intellectual richness of the Kiikaonde-speaking community. We are more than just a publisher; we are a cultural archive in motion.
+              </p>
+              <div className="pt-4">
+                <Link href="/about" className="inline-flex items-center text-sm font-medium hover:text-primary transition-colors text-muted-foreground">
+                  Read our full story <span aria-hidden="true" className="ml-2">&rarr;</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

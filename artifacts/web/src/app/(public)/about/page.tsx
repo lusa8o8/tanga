@@ -4,26 +4,34 @@ export const revalidate = 86400; // ISR
 
 export default function About() {
   return (
-    <div className="max-w-3xl flex flex-col gap-16">
-      <div>
-        <h1 className="text-4xl md:text-5xl font-serif text-primary mb-8">About Taanga-Taanga Publishers Limited</h1>
-        <div className="text-lg text-muted-foreground leading-relaxed space-y-6">
-          <span className="text-muted block mb-4">— placeholder copy —</span>
-          <p>
-            Taanga-Taanga Publishers Limited is an independent press dedicated to the preservation,
-            celebration, and continued vitality of the Kiikaonde and Tonga/Chitonga languages.
-          </p>
-          <p>
-            Founded with the belief that a language must be read to truly live, we work
-            with local authors, educators, and historians to produce high-quality literature,
-            educational materials, and cultural records. Our catalog spans from essential
-            grammar texts to vibrant folktale collections.
-          </p>
+    <div className="flex flex-col gap-24">
+      <section>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
+          <div className="md:col-span-4 flex flex-col">
+            <h1 className="text-4xl md:text-5xl font-serif text-primary mb-4">Our Story</h1>
+            <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80">
+              A Legacy of Language
+            </span>
+          </div>
+          
+          <div className="md:col-span-8 md:col-start-6 max-w-2xl border-l border-border pl-6 md:pl-10">
+            <div className="space-y-6 text-muted-foreground leading-relaxed">
+              <p className="font-serif italic text-lg text-primary">
+                "Language is the soul of a people. Without our written word, our history is a fading echo."
+              </p>
+              <p>
+                Taanga-Taanga Publishers Ltd. was founded with a singular, unwavering mission: to safeguard the Kiikaonde language through high-quality, accessible literature. In an era of global homogenization, we serve as the stewards of regional identity, providing a platform for local authors to capture the nuances of our culture, traditions, and linguistics.
+              </p>
+              <p>
+                From complex grammatical studies to vibrant collections of folklore and modern narratives, our catalog is a testament to the intellectual richness of the Kiikaonde-speaking community. We are more than just a publisher; we are a cultural archive in motion.
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <section className="border-t border-border pt-12">
-        <h2 className="font-sans text-xs font-semibold tracking-widest uppercase mb-12 text-muted-foreground">
+      <section className="border-t border-border pt-16">
+        <h2 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-16 text-muted-foreground/80">
           Contact Directory
         </h2>
         
