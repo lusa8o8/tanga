@@ -5,7 +5,10 @@ export const useListAdminBooks = (params?: any, options?: any) => {
   return useQuery<any[]>({
     queryKey: getListAdminBooksQueryKey(params),
     queryFn: async () => {
-      const res = await fetch('/api/admin/books');
+      const qs = params ? '?' + new URLSearchParams(
+        Object.fromEntries(Object.entries(params).filter(([, v]) => v != null && v !== ''))
+      ).toString() : '';
+      const res = await fetch(`/api/admin/books${qs}`);
       if (!res.ok) throw new Error('Network response was not ok');
       return res.json();
     },
@@ -56,7 +59,10 @@ export const useListAdminAuthors = (params?: any, options?: any) => {
   return useQuery<any[]>({
     queryKey: getListAdminAuthorsQueryKey(params),
     queryFn: async () => {
-      const res = await fetch('/api/admin/authors');
+      const qs = params ? '?' + new URLSearchParams(
+        Object.fromEntries(Object.entries(params).filter(([, v]) => v != null && v !== ''))
+      ).toString() : '';
+      const res = await fetch(`/api/admin/authors${qs}`);
       if (!res.ok) throw new Error('Network response was not ok');
       return res.json();
     },
