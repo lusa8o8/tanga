@@ -1,8 +1,17 @@
 import React from "react";
+import { adminDb } from "@/lib/firebase-admin";
 
-export const revalidate = 86400; // ISR
+export const revalidate = 3600; // ISR: 1 hour
 
-export default function About() {
+async function getSettings() {
+  const doc = await adminDb.collection('settings').doc('global').get();
+  return doc.data() || {};
+}
+
+export default async function About() {
+  const settings = await getSettings();
+  const story = settings.story || {};
+  const contact = settings.contact || {};
   return (
     <div className="flex flex-col gap-24">
       <section>
@@ -17,13 +26,13 @@ export default function About() {
           <div className="md:col-span-8 md:col-start-6 max-w-2xl border-l border-border pl-6 md:pl-10">
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p className="font-serif italic text-lg text-primary">
-                "Language is the soul of a people. Without our written word, our history is a fading echo."
+                "{story.quote || "Language is the soul of a people. Without our written word, our history is a fading echo."}"
               </p>
               <p>
-                Taanga-Taanga Publishers Ltd. was founded with a singular, unwavering mission: to safeguard the Kiikaonde language through high-quality, accessible literature. In an era of global homogenization, we serve as the stewards of regional identity, providing a platform for local authors to capture the nuances of our culture, traditions, and linguistics.
+                {story.paragraph1 || "Taanga-Taanga Publishers Ltd. was founded with a singular, unwavering mission: to safeguard the Kiikaonde language through high-quality, accessible literature. In an era of global homogenization, we serve as the stewards of regional identity, providing a platform for local authors to capture the nuances of our culture, traditions, and linguistics."}
               </p>
               <p>
-                From complex grammatical studies to vibrant collections of folklore and modern narratives, our catalog is a testament to the intellectual richness of the Kiikaonde-speaking community. We are more than just a publisher; we are a cultural archive in motion.
+                {story.paragraph2 || "From complex grammatical studies to vibrant collections of folklore and modern narratives, our catalog is a testament to the intellectual richness of the Kiikaonde-speaking community. We are more than just a publisher; we are a cultural archive in motion."}
               </p>
             </div>
           </div>
@@ -39,16 +48,16 @@ export default function About() {
           <div>
             <h3 className="font-serif text-xl mb-4 text-primary">Sales & Bulk Orders</h3>
             <div className="text-muted-foreground text-sm flex flex-col gap-2">
-              <p>sales@taanga-taanga.com</p>
-              <p>+260 97 123 4567</p>
+              <p>{contact.salesEmail || "sales@taanga-taanga.com"}</p>
+              <p>{contact.phone || "+260 97 123 4567"}</p>
             </div>
           </div>
 
           <div>
             <h3 className="font-serif text-xl mb-4 text-primary">General Inquiries</h3>
             <div className="text-muted-foreground text-sm flex flex-col gap-2">
-              <p>hello@taanga-taanga.com</p>
-              <p>PO Box 31000<br/>Lusaka, Zambia</p>
+              <p>{contact.generalEmail || "hello@taanga-taanga.com"}</p>
+              <p>{contact.address || "PO Box 31000\nLusaka, Zambia"}</p>
             </div>
           </div>
         </div>

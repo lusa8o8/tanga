@@ -1,9 +1,9 @@
-"use client";
 import * as React from "react";
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
 
-export function PublicLayout({ children }: { children: React.ReactNode }) {
+export function PublicLayout({ children, settings }: { children: React.ReactNode, settings?: any }) {
+  const contact = settings?.contact || {};
   return (
     <div className="min-h-[100dvh] flex flex-col bg-background text-foreground">
       <header className="w-full border-b border-border py-8 px-6 md:px-12">
@@ -31,8 +31,8 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
           <div>
             <h4 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-6 text-primary/80">Sales/Bulk Orders</h4>
             <div className="text-muted-foreground text-sm flex flex-col gap-3">
-              <p>sales@taanga-taanga.com</p>
-              <p>+260 97 123 4567</p>
+              <p>{contact.salesEmail || "sales@taanga-taanga.com"}</p>
+              <p>{contact.phone || "+260 97 123 4567"}</p>
             </div>
           </div>
           <div>
@@ -45,8 +45,8 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
           <div>
             <h4 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-6 text-primary/80">General Contact</h4>
             <div className="text-muted-foreground text-sm flex flex-col gap-3">
-              <p>hello@taanga-taanga.com</p>
-              <p>PO Box 31000, Lusaka, Zambia</p>
+              <p>{contact.generalEmail || "hello@taanga-taanga.com"}</p>
+              <p>{contact.address || "PO Box 31000, Lusaka, Zambia"}</p>
             </div>
           </div>
         </div>

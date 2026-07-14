@@ -23,12 +23,20 @@ async function getAuthorsSubset() {
   return snapshot.docs.map((doc: any) => ({ id: doc.id, ...(doc.data() as any) }));
 }
 
+async function getSettings() {
+  const doc = await adminDb.collection('settings').doc('global').get();
+  return doc.data() || {};
+}
+
 export default async function Home() {
-  const [featuredBooks, languages, authors] = await Promise.all([
+  const [featuredBooks, languages, authors, settings] = await Promise.all([
     getFeaturedBooks(),
     getLanguages(),
-    getAuthorsSubset()
+    getAuthorsSubset(),
+    getSettings()
   ]);
+  const hero = settings.hero || {};
+  const story = settings.story || {};
 
   return (
     <div className="flex flex-col gap-20 md:gap-28">
@@ -39,18 +47,17 @@ export default async function Home() {
           className="absolute inset-0 overflow-hidden pointer-events-none select-none flex justify-end items-start opacity-[0.03]"
           aria-hidden="true"
         >
-          <div className="font-serif text-[12rem] lg:text-[18rem] leading-[0.75] text-primary text-right -mr-12 md:-mr-24 -mt-8 tracking-tighter">
-            Heritage<br />
-            Language
+          <div className="font-serif text-[12rem] lg:text-[18rem] leading-[0.75] text-primary text-right -mr-12 md:-mr-24 -mt-8 tracking-tighter whitespace-pre-wrap">
+            {hero.watermark?.replace(' / ', '\n') || "Heritage\nLanguage"}
           </div>
         </div>
 
         <div className="max-w-2xl relative z-10">
           <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.15] mb-8">
-            Preserving Heritage, One Page at a Time.
+            {hero.headline || "Preserving Heritage, One Page at a Time."}
           </h1>
           <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-sm">
-            Publishing books in Kiikaonde and Tonga that preserve language, culture, and history for future generations.
+            {hero.subHeadline || "Publishing books in Kiikaonde and Tonga that preserve language, culture, and history for future generations."}
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Button asChild size="lg" className="rounded-none px-8">
@@ -138,13 +145,13 @@ export default async function Home() {
           <div className="md:col-span-8 md:col-start-6 max-w-2xl border-l border-border pl-6 md:pl-10">
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p className="font-serif italic text-lg text-primary">
-                "Language is the soul of a people. Without our written word, our history is a fading echo."
+                "{story.quote || "Language is the soul of a people. Without our written word, our history is a fading echo."}"
               </p>
               <p>
-                Taanga-Taanga Publishers Ltd. was founded with a singular, unwavering mission: to safeguard the Kiikaonde language through high-quality, accessible literature. In an era of global homogenization, we serve as the stewards of regional identity, providing a platform for local authors to capture the nuances of our culture, traditions, and linguistics.
+                {story.paragraph1 || "Taanga-Taanga Publishers Ltd. was founded with a singular, unwavering mission: to safeguard the Kiikaonde language through high-quality, accessible literature. In an era of global homogenization, we serve as the stewards of regional identity, providing a platform for local authors to capture the nuances of our culture, traditions, and linguistics."}
               </p>
               <p>
-                From complex grammatical studies to vibrant collections of folklore and modern narratives, our catalog is a testament to the intellectual richness of the Kiikaonde-speaking community. We are more than just a publisher; we are a cultural archive in motion.
+                {story.paragraph2 || "From complex grammatical studies to vibrant collections of folklore and modern narratives, our catalog is a testament to the intellectual richness of the Kiikaonde-speaking community. We are more than just a publisher; we are a cultural archive in motion."}
               </p>
             </div>
           </div>

@@ -1,18 +1,24 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { adminDb } from "@/lib/firebase-admin";
 
-export const revalidate = 86400; // ISR
+export const revalidate = 3600; // ISR: 1 hour
 
-export default function BulkOrders() {
+async function getSettings() {
+  const doc = await adminDb.collection('settings').doc('global').get();
+  return doc.data() || {};
+}
+
+export default async function BulkOrders() {
+  const settings = await getSettings();
+  const bulkOrders = settings.bulkOrders || {};
   return (
     <div className="max-w-3xl flex flex-col gap-12">
       <div>
         <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6">Bulk Orders</h1>
-        <p className="text-lg text-muted-foreground leading-relaxed">
-          <span className="text-muted">— placeholder copy —</span><br/>
-          We supply schools, libraries, and language programs across Zambia and internationally. 
-          Discounted rates are available for institutional orders of 20 copies or more per title.
+        <p className="text-lg text-muted-foreground leading-relaxed whitespace-pre-wrap">
+          {bulkOrders.introText || "We supply schools, libraries, and language programs across Zambia and internationally. Discounted rates are available for institutional orders of 20 copies or more per title."}
         </p>
       </div>
 
@@ -49,13 +55,13 @@ export default function BulkOrders() {
       <section className="border-y border-border py-8 my-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 text-sm">
           <div className="text-muted-foreground">Minimum Order</div>
-          <div>20 units (mixed titles permitted)</div>
+          <div>{bulkOrders.minimumOrder || "20 units (mixed titles permitted)"}</div>
           
           <div className="text-muted-foreground">Fulfillment Time</div>
-          <div>2-3 weeks (domestic), 4-6 weeks (international)</div>
+          <div>{bulkOrders.fulfillmentTime || "2-3 weeks (domestic), 4-6 weeks (international)"}</div>
           
           <div className="text-muted-foreground">Payment Terms</div>
-          <div>30 days Net for approved institutions</div>
+          <div>{bulkOrders.paymentTerms || "30 days Net for approved institutions"}</div>
         </div>
       </section>
 
