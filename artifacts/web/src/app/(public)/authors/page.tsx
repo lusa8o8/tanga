@@ -29,12 +29,14 @@ export default async function AuthorsIndex() {
                 <img
                   src={author.photoUrl}
                   alt={author.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
                   style={{ objectPosition: author.photoPosition || "center" }}
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-xs uppercase tracking-widest text-muted-foreground">
-                  No Photo
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-8 h-8 opacity-20" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </div>
                 </div>
               )}
             </div>
