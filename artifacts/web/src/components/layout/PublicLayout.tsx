@@ -26,7 +26,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="w-full bg-[hsl(var(--surface-footer))] py-20 md:py-32 mt-32 md:mt-40 px-6 md:px-12">
+      <footer className="w-full bg-[hsl(var(--surface-footer))] py-20 md:py-32 mt-16 md:mt-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24 mb-16">
           <div>
             <h4 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-6 text-primary/80">Sales/Bulk Orders</h4>

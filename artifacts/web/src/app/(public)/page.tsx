@@ -27,7 +27,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-20 md:gap-28">
       {/* Hero Section */}
-      <section className="relative pt-16 md:pt-24">
+      <section className="relative pt-8 md:pt-12">
         {/* Experimental Background Texture */}
         <div 
           className="absolute inset-0 overflow-hidden pointer-events-none select-none flex justify-end items-start opacity-[0.03]"
