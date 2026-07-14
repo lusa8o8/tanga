@@ -3,45 +3,16 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { Logo } from "@/components/ui/logo";
-import { auth, onAuthStateChanged, signOut } from "@/lib/firebase";
-import { User } from "firebase/auth";
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [user, setUser] = React.useState<User | null>(null);
-  const [isLoading, setIsLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    if (pathname === "/admin/login") {
-      setIsLoading(false);
-      return;
-    }
-
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        setIsLoading(false);
-      } else {
-        // Clear any stale cookies and redirect to break infinite loops
-        fetch("/api/auth/logout", { method: "POST" }).then(() => {
-          window.location.href = "/admin/login";
-        });
-      }
-    });
-    return () => unsubscribe();
-  }, [router, pathname]);
 
   if (pathname === "/admin/login") {
     return <>{children}</>;
   }
 
-  if (isLoading || !user) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  }
-
   const handleLogout = async () => {
-    await signOut(auth);
     await fetch("/api/auth/logout", { method: "POST" });
     router.push("/admin/login");
   };
