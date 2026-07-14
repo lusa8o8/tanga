@@ -1,10 +1,26 @@
 import { NextResponse } from 'next/server';
 import { adminDb } from '@/lib/firebase-admin';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const snapshot = await adminDb.collection('books').get();
-    const books = snapshot.docs.map((doc: any) => ({ id: doc.id, ...doc.data() }));
+    const { searchParams } = new URL(request.url);
+    const status = searchParams.get('status');
+    const search = searchParams.get('search')?.toLowerCase();
+
+    let query: any = adminDb.collection('books');
+
+    if (status) {
+      query = query.where('status', '==', status);
+    }
+
+    const snapshot = await query.get();
+    let books = snapshot.docs.map((doc: any) => ({ id: doc.id, ...doc.data() }));
+
+    // Apply client-side title search (Firestore doesn't support full-text search natively)
+    if (search) {
+      books = books.filter((b: any) => b.title?.toLowerCase().includes(search));
+    }
+
     return NextResponse.json(books);
   } catch (error) {
     console.error('Error fetching admin books:', error);
