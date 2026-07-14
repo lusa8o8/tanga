@@ -25,7 +25,7 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="flex flex-col gap-32 md:gap-40">
+    <div className="flex flex-col gap-20 md:gap-28">
       {/* Hero Section */}
       <section className="max-w-2xl pt-16 md:pt-24">
         <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.15] mb-8">
@@ -45,7 +45,7 @@ export default async function Home() {
       </section>
 
       {/* Browse by Language */}
-      <section className="border-t border-border pt-16 md:pt-20">
+      <section className="border-t border-border pt-12">
         <h2 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-12 text-muted-foreground/80">
           Browse by Language
         </h2>
@@ -63,7 +63,7 @@ export default async function Home() {
       </section>
 
       {/* Featured Books */}
-      <section className="border-t border-border pt-16 md:pt-20">
+      <section className="border-t border-border pt-12">
         <h2 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-16 text-muted-foreground/80">
           Featured Books
         </h2>
