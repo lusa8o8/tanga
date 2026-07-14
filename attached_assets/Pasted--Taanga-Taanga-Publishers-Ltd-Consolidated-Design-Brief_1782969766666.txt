@@ -1,0 +1,100 @@
+# Taanga-Taanga Publishers Ltd — Consolidated Design Brief
+**For: Replit UI build. Companion to the OpenCode backend brief — both should be treated as one system, not two separate builds.**
+
+---
+
+## 1. Project Summary
+
+A lean, high-conversion site for a small Zambian local-language press (Kiikaonde and Tonga/Chitonga titles). No e-commerce — the site's job is discovery-to-inquiry, not checkout. Primary conversion event is the Inquiry Form, serving both institutional/bulk buyers (schools, libraries, cultural orgs) and individual buyers through one unified, lightly-branching flow. Single non-technical admin manages all content through a custom admin panel.
+
+**Guiding principle: "boring = effective."** The site's UI is deliberately quiet and restrained so that the book cover artwork — which is highly saturated and colorful — remains the only real source of visual energy on the site. Every design decision below exists to protect that principle.
+
+---
+
+## 2. Visual System
+
+### Color Palette
+| Token | Approx. Value | Usage |
+|---|---|---|
+| `background` | warm off-white, `#F4F1EC` (adjust in-tool, not stark white) | Page background throughout |
+| `text-primary` | charcoal/near-black, `#2A2724` | Headlines, body text |
+| `text-muted` | soft grey, `#8C8378` | Labels, secondary text, breadcrumbs |
+| `border-subtle` | light warm grey, `#D9D3C7` | Dividers, input underlines, card separators |
+| `surface-footer` | slightly darker tint of background, `#EBE6DC` | Footer background |
+| `accent-cta` | same as `text-primary` (filled dark buttons) | Primary CTAs |
+| `status-published` | muted sage, `#9CA88F` (background tint, low saturation) | Admin "Published" badge |
+| `status-draft` | muted amber, `#D4B483` (background tint, low saturation) | Admin "Draft" badge |
+
+**Hard rule: no other saturated colors appear anywhere in site chrome.** All bright color on the site comes exclusively from book cover images and the functional `language` tag colors (see Component Patterns below). This is non-negotiable — it's the core mechanism that makes the whole system work.
+
+### Typography
+- **Headlines/titles:** literary serif (validated direction: something in the family of **Lora, Source Serif 4, or Playfair Display** — pick one, use consistently everywhere a serif appears)
+- **Body/UI/labels/nav:** clean humanist sans-serif (validated direction: **Inter, Public Sans, or Work Sans**)
+- Clear size hierarchy: page titles significantly larger than section headers, which are larger than body text. Small-caps sans-serif used consistently for section labels ("FEATURED BOOKS," "YOU MAY ALSO LIKE," "BOOKS BY [AUTHOR]") — same treatment every time it appears.
+
+### Spacing
+- Generous margins throughout — **all page content aligns to the same left/right margin as the header**, no centered or narrower content columns on any page (this was an inconsistency in early references; corrected here as a hard rule).
+- Forms are the one exception: form *fields* render in a moderate-width block (~500–600px) rather than stretching full-width, but that block still starts at the same left margin as the page header/title above it — never centered or offset.
+
+### Component Patterns (used consistently across every screen)
+- **Book cards:** cover image with no border/shadow, floating directly on background; title (serif, small), author (sans, muted grey), language tag (small pill) beneath. Identical treatment on Homepage, Catalog, "You May Also Like," and Author page book grids.
+- **Language tags:** small pill-shaped badges, low-saturation, one consistent color per language (distinct but muted — not loud)
+- **Buttons:** primary = filled dark, sans-serif, no rounded-pill styling (soft corners only); secondary = outline/border only, same shape
+- **Form inputs:** thin bottom-border only, no boxes, no shadows, no colorful focus states — labels sit above each field in small sans-serif
+- **Toggles/segmented controls:** pill-shaped tab pairs (used for Inquiry Form's School/Individual switch and Admin Book List's Published/Drafts/All filter) — consistent styling both places
+- **Metadata blocks:** quiet label/value pairs in a row (ISBN, Page Count, etc.) — styled like a spec sheet, never as decorative "feature" callouts
+
+---
+
+## 3. Data Model → UI Mapping
+
+The UI must be built directly against this schema — every field below has a corresponding, confirmed UI element. (Full Firestore schema detail lives in the OpenCode backend brief; this is the UI-relevant summary.)
+
+**`books` collection fields → UI:**
+`title`, `slug` (auto-generated, never shown/edited), `coverImageUrl`, `authorId`+`authorName`, `synopsis`, `language` (fixed list: Kiikaonde, Tonga/Chitonga — dropdown), `category` (fixed list: Grammar & Language Reference, Folktales & Oral Tradition, Readers & Learning Series, Cultural & Historical Nonfiction, Children's Illustrated — dropdown), `series` + `seriesNumber` (optional text/number), `format` (currently locked to "Hardcover"), `pageCount`, `publicationDate`, `isbn`, `status` (Draft/Published toggle), `featured` (boolean toggle). `relatedBookIds` is **not a stored field** — "You May Also Like" is auto-derived at query time from shared `language` + `category`, boosted by shared `series`.
+
+**`authors` collection fields → UI:** `name`, `slug` (auto-generated), `photoUrl`, `bio`. Books-by-author is a live query on `books.authorId`, not a stored relationship.
+
+**Inquiry form payload (not persisted — email only):** `inquirerType` (School/Institution | Individual — drives conditional fields), `organizationName` (conditional), `name`, `email`, `phone` (optional), `titlesOfInterest` (pre-filled when arriving from a Book Detail page), `quantityInterest` (conditional, optional), `message` (optional).
+
+---
+
+## 4. Page-by-Page Spec (Public Site)
+
+All validated against generated visual references — see individual images for exact layout.
+
+1. **Homepage** — header/nav, hero with one-line positioning statement + two CTAs ("Browse the Catalog" / "Inquire About Bulk Orders"), "Browse by Language" quick links, Featured Books grid (query: `featured == true`), footer.
+2. **Catalog** — page title + subtext, filter row (Language/Category/Series dropdowns + search + sort), responsive book card grid (4 columns desktop), pagination/"Load More," empty state for zero-result filter combos (not visually mocked, but must be built).
+3. **Book Detail** — two-column: cover (large) left, title/author/tags/synopsis/context-blurb/metadata/CTA right; "You May Also Like" row beneath, full width.
+4. **Author Page** — photo, name, bio, "Books by [Author]" grid. Deliberately the lightest/simplest page — resist adding sections beyond this.
+5. **Bulk Ordering** — page title/subtext, intro paragraph, 3-step "How It Works" (numbered, no icons), format/shipping metadata block, CTA section ("Start an Inquiry").
+6. **Inquiry Form** — toggle (School/Institution ↔ Individual) drives conditional fields (see Data Model above); pre-fill support for `titlesOfInterest` when arriving from a Book Detail CTA; confirmation copy branches by `inquirerType`.
+7. **About / Contact** — segmented contact sections (see Footer correction below for the definitive list).
+
+## 5. Page-by-Page Spec (Admin Panel)
+
+1. **Login** — standalone, no site chrome/nav. Logo, "Admin Login" headline, Email + Password fields, single "Sign In" button. **No forgot-password, no signup — these don't exist in the auth model and must never be added.**
+2. **Dashboard** — simplified header (logo, Manage Books/Manage Authors/Sign Out only). "Welcome back" headline, two large equal-weight panels (Manage Books, Manage Authors) each with a simple count, smaller secondary "+ Add New Book" link beneath. **No charts, no analytics — there is no data source for them.**
+3. **Book List** — "Manage Books" title + "+ Add New Book" primary button, Published/Drafts/All filter toggle + search, card grid using the **horizontal thumbnail + text layout** validated in reference (cover left, title/author/status badge/Edit link right) — this is an intentional, approved deviation from the public Catalog's vertical card style, optimized for admin scanning density.
+4. **Book Form (Add/Edit)** — two-column: image upload-with-preview left; right column has Title, Author (searchable + inline "+ Add New Author"), Language + Category (paired dropdowns), Series + Series Number (paired), Page Count + Publication Date + Format (Format shown locked/disabled), ISBN, Synopsis, then a visually distinct tinted section containing Status (Published/Draft toggle) and Featured (boolean toggle), then Save/Cancel.
+5. **Author Form (Add/Edit)** — same structural pattern as Book Form, simplified: photo upload left, Name + Bio (textarea) right. No separate visual reference was generated; build directly from the Book Form pattern.
+
+---
+
+## 6. Corrections to Apply (Do Not Carry Forward From Reference Images)
+
+These issues appeared during the AI-generated visual reference process and must be corrected in the actual build — they are NOT intentional design decisions:
+
+1. **Footer must be trimmed to exactly three columns:** Sales/Bulk Orders, Press/Media, General Contact. Drop all of the following, which appeared repeatedly in generated references but were never scoped: Careers, Rights & Permissions, Press Releases, Media Kit, Review Copies, Booksellers & Distributors, Inspection Copies.
+2. **Content alignment:** all page content (headers, forms, sections) must align to the same left margin as the site header — the Bulk Ordering and Inquiry Form references showed inconsistent centered/offset content blocks; this must not carry into the build.
+3. **All logo instances are placeholders** — replace with the actual spider-web emblem logo (source file provided separately).
+4. **All book cover art in references is fictional placeholder** — replace with actual uploaded cover art for the real catalog.
+
+## 7. Copy Placeholders — Pending Press Context
+
+The following copy is illustrative only and will be corrected once real operational context is available:
+- Bulk Ordering page: "who this is for" framing, order minimums, lead times, PO process details
+- Book Detail "context blurb" (currently generic: "This title contributes to the preservation and accessibility of [language]-language literature")
+- About page history/mission paragraph
+
+**Do not treat any of the above as final copy.** Build the layout/structure now; content swap is a copy-only change, not a rebuild.

@@ -1,0 +1,46 @@
+{
+  "authors": [
+    {
+      "id": "author-1",
+      "name": "Collen Mululu",
+      "slug": "collen-mululu",
+      "bio": "A prominent Zambian local-language writer focusing on Tonga oral traditions.",
+      "photoUrl": ""
+    },
+    {
+      "id": "author-2",
+      "name": "Gaston Kaji",
+      "slug": "gaston-kaji",
+      "bio": "Expert linguist and writer of Kiikaonde grammar references.",
+      "photoUrl": ""
+    }
+  ],
+  "books": [
+    {
+      "id": "book-1",
+      "title": "Tonga Folktales",
+      "slug": "tonga-folktales",
+      "authorId": "author-1",
+      "authorName": "Collen Mululu",
+      "language": "Tonga/Chitonga",
+      "category": "Folktales & Oral Tradition",
+      "status": "published",
+      "featured": true,
+      "synopsis": "A collection of traditional Tonga stories passed down through generations.",
+      "coverImageUrl": ""
+    },
+    {
+      "id": "book-2",
+      "title": "Kiikaonde Grammar Guide",
+      "slug": "kiikaonde-grammar-guide",
+      "authorId": "author-2",
+      "authorName": "Gaston Kaji",
+      "language": "Kiikaonde",
+      "category": "Grammar & Language Reference",
+      "status": "published",
+      "featured": true,
+      "synopsis": "The complete reference manual for learning and writing in Kiikaonde.",
+      "coverImageUrl": ""
+    }
+  ]
+}
