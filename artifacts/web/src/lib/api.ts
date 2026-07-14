@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const getListAdminBooksQueryKey = (params?: any) => ['adminBooks', params];
 export const useListAdminBooks = (params?: any, options?: any) => {
-  return useQuery({
+  return useQuery<any[]>({
     queryKey: getListAdminBooksQueryKey(params),
     queryFn: async () => {
       const res = await fetch('/api/admin/books');
@@ -53,7 +53,7 @@ export const useDeleteBook = () => {
 
 export const getListAdminAuthorsQueryKey = (params?: any) => ['adminAuthors', params];
 export const useListAdminAuthors = (params?: any, options?: any) => {
-  return useQuery({
+  return useQuery<any[]>({
     queryKey: getListAdminAuthorsQueryKey(params),
     queryFn: async () => {
       const res = await fetch('/api/admin/authors');
@@ -139,7 +139,7 @@ export const useGetAuthor = (slug: string, options?: any) => {
 
 export const getListAdminLanguagesQueryKey = (params?: any) => ['adminLanguages', params];
 export const useListAdminLanguages = (params?: any, options?: any) => {
-  return useQuery({
+  return useQuery<any[]>({
     queryKey: getListAdminLanguagesQueryKey(params),
     queryFn: async () => {
       const res = await fetch('/api/admin/languages');
@@ -176,7 +176,7 @@ export const useDeleteLanguage = () => {
 
 export const getListAdminCategoriesQueryKey = (params?: any) => ['adminCategories', params];
 export const useListAdminCategories = (params?: any, options?: any) => {
-  return useQuery({
+  return useQuery<any[]>({
     queryKey: getListAdminCategoriesQueryKey(params),
     queryFn: async () => {
       const res = await fetch('/api/admin/categories');
@@ -213,7 +213,7 @@ export const useDeleteCategory = () => {
 
 export const getListAdminInquiriesQueryKey = (params?: any) => ['adminInquiries', params];
 export const useListAdminInquiries = (params?: any, options?: any) => {
-  return useQuery({
+  return useQuery<any[]>({
     queryKey: getListAdminInquiriesQueryKey(params),
     queryFn: async () => {
       const res = await fetch('/api/admin/inquiries');
