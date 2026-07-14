@@ -66,15 +66,8 @@ export default async function Home() {
       {/* Browse by Language */}
       <section className="border-t border-border pt-12 md:pt-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
-          <div className="md:col-span-4 flex flex-col">
-            <h2 className="text-4xl md:text-5xl font-serif text-primary mb-4">Our Languages</h2>
-            <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80">
-              Browse by Language
-            </span>
-          </div>
-          
-          <div className="md:col-span-8 md:col-start-6 border-l border-border pl-6 md:pl-10 flex items-center">
-            <div className="flex flex-wrap gap-6">
+          <div className="md:col-span-8 flex items-center justify-end border-r border-border pr-6 md:pr-10">
+            <div className="flex flex-wrap justify-end gap-6">
               {languages.map((lang: any) => (
                 <Link
                   key={lang.id}
@@ -86,12 +79,19 @@ export default async function Home() {
               ))}
             </div>
           </div>
+
+          <div className="md:col-span-4 flex flex-col items-end text-right">
+            <h2 className="text-4xl md:text-5xl font-serif text-primary mb-4">Our Languages</h2>
+            <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80">
+              Browse by Language
+            </span>
+          </div>
         </div>
       </section>
 
       {/* Featured Books */}
-      <section className="border-t border-border pt-24 md:pt-32 pb-8 flex flex-col items-center">
-        <div className="text-center mb-16">
+      <section className="border-t border-border pt-24 md:pt-32 pb-8">
+        <div className="mb-16">
           <h2 className="text-5xl md:text-6xl font-serif text-primary mb-6">Curated Selection</h2>
           <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80 block">
             Featured Books
@@ -159,10 +159,10 @@ export default async function Home() {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16 w-full">
+        <div className="flex flex-wrap justify-center gap-x-12 gap-y-16 w-full">
           {authors.map((author: any) => (
-            <Link key={author.id} href={`/authors/${author.slug}`} className="group flex flex-col items-center text-center">
-              <div className="aspect-square w-full max-w-[200px] bg-muted overflow-hidden border border-border rounded-full grayscale group-hover:grayscale-0 transition-all duration-500 mb-6 mx-auto">
+            <Link key={author.id} href={`/authors/${author.slug}`} className="group flex flex-col items-center text-center w-full max-w-[180px]">
+              <div className="aspect-square w-full bg-muted overflow-hidden border border-border rounded-full grayscale group-hover:grayscale-0 transition-all duration-500 mb-6">
                 {author.photoUrl ? (
                   <img
                     src={author.photoUrl}
