@@ -57,7 +57,7 @@ export default async function About() {
             <h3 className="font-serif text-xl mb-4 text-primary">General Inquiries</h3>
             <div className="text-muted-foreground text-sm flex flex-col gap-2">
               <p>{contact.generalEmail || "hello@taanga-taanga.com"}</p>
-              <p>{contact.address || "PO Box 31000\nLusaka, Zambia"}</p>
+              <p>{contact.address || "3 Green Lane Kabulonga, P.O. Box 31981, Lusaka"}</p>
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ export async function GET() {
     if (!doc.exists) {
       // Return default empty structure if it doesn't exist yet
       return NextResponse.json({
-        contact: { salesEmail: "", generalEmail: "", phone: "", address: "" },
+        contact: { salesEmail: "", generalEmail: "", phone: "", address: "3 Green Lane Kabulonga, P.O. Box 31981, Lusaka" },
         story: { quote: "", paragraph1: "", paragraph2: "" },
         hero: { watermark: "", headline: "", subHeadline: "" },
         bulkOrders: { introText: "", minimumOrder: "", fulfillmentTime: "", paymentTerms: "" }

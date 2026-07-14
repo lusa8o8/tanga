@@ -13,7 +13,7 @@ async function seedSettings() {
       salesEmail: "sales@taanga-taanga.com",
       generalEmail: "hello@taanga-taanga.com",
       phone: "+260 97 123 4567",
-      address: "PO Box 31000, Lusaka, Zambia"
+      address: "3 Green Lane Kabulonga, P.O. Box 31981, Lusaka"
     },
     story: {
       quote: "Language is the soul of a people. Without our written word, our history is a fading echo.",

@@ -46,7 +46,7 @@ export function PublicLayout({ children, settings }: { children: React.ReactNode
             <h4 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-6 text-primary/80">General Contact</h4>
             <div className="text-muted-foreground text-sm flex flex-col gap-3">
               <p>{contact.generalEmail || "hello@taanga-taanga.com"}</p>
-              <p>{contact.address || "PO Box 31000, Lusaka, Zambia"}</p>
+              <p>{contact.address || "3 Green Lane Kabulonga, P.O. Box 31981, Lusaka"}</p>
             </div>
           </div>
         </div>
