@@ -61,9 +61,11 @@ export default function SiteSettings() {
 
   return (
     <div className="max-w-4xl flex flex-col gap-12 pb-24">
-      <div>
-        <h1 className="text-4xl font-serif text-primary mb-4">Site Settings</h1>
-        <p className="text-muted-foreground text-lg">Manage global content and copy across the public website.</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-4xl font-serif text-primary mb-2">Site Settings</h1>
+          <p className="text-muted-foreground text-lg">Manage global content and copy across the public website.</p>
+        </div>
       </div>
 
       {/* Global Contact Details */}

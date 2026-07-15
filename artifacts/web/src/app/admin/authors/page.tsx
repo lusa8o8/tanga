@@ -34,9 +34,9 @@ export default function AdminAuthorsList() {
 
   return (
     <div className="max-w-4xl">
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12">
         <h1 className="text-4xl font-serif text-primary">Manage Authors</h1>
-        <Button asChild size="lg" className="rounded-none">
+        <Button asChild size="lg" className="rounded-none shrink-0 w-full sm:w-auto">
           <Link href="/admin/authors/new">+ Add New Author</Link>
         </Button>
       </div>

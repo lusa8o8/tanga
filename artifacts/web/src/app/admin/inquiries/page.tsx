@@ -44,8 +44,11 @@ export default function AdminInquiriesList() {
 
   return (
     <div className="max-w-6xl">
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12">
         <h1 className="text-4xl font-serif text-primary">Manage Inquiries</h1>
+        <div className="text-sm text-muted-foreground bg-primary/5 px-4 py-2">
+          New inquiries from the Bulk Orders form appear here.
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">
@@ -54,9 +57,9 @@ export default function AdminInquiriesList() {
         ) : inquiries.length > 0 ? (
           inquiries.map((inquiry: any) => (
             <div key={inquiry.id} className="flex flex-col gap-4 p-6 border border-border bg-background">
-              <div className="flex justify-between items-start gap-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                 <div>
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
                     <span className="font-serif text-lg font-medium">{inquiry.name}</span>
                     <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full uppercase tracking-wider">
                       {inquiry.inquirerType}
@@ -73,19 +76,19 @@ export default function AdminInquiriesList() {
                       {inquiry.status === 'new' ? 'New' : inquiry.status === 'in_progress' ? 'In Progress' : 'Responded'}
                     </button>
                   </div>
-                  <div className="text-sm text-muted-foreground flex flex-wrap gap-x-6 gap-y-1">
+                  <div className="text-sm text-muted-foreground flex flex-col sm:flex-row sm:flex-wrap gap-x-6 gap-y-1">
                     <span>{inquiry.email}</span>
                     {inquiry.phone && <span>{inquiry.phone}</span>}
                     {inquiry.organizationName && <span>Org: {inquiry.organizationName}</span>}
                   </div>
                 </div>
-                <div className="flex flex-col items-end gap-2">
+                <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-2 border-t sm:border-0 border-border pt-4 sm:pt-0 mt-2 sm:mt-0">
                   <div className="text-sm text-muted-foreground">
                     {inquiry.createdAt ? format(new Date(inquiry.createdAt), "MMM d, yyyy h:mm a") : 'Unknown date'}
                   </div>
                   <button
                     onClick={() => setDeleteTarget(inquiry.id)}
-                    className="text-sm text-muted-foreground hover:text-red-700 transition-colors"
+                    className="text-sm font-medium text-red-700 hover:text-red-800 transition-colors"
                   >
                     Delete
                   </button>

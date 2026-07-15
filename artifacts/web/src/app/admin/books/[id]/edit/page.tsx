@@ -109,9 +109,9 @@ export default function AdminBooksForm() {
 
   return (
     <div className="max-w-5xl">
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12">
         <h1 className="text-4xl font-serif text-primary">{id ? "Edit Book" : "Add New Book"}</h1>
-        <Link href="/admin/books" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+        <Link href="/admin/books" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors text-center sm:text-left">
           Cancel
         </Link>
       </div>
@@ -268,8 +268,8 @@ export default function AdminBooksForm() {
           </div>
 
           <div className="p-8 bg-muted/20 border border-border mt-4 flex flex-col gap-6">
-            <div className="flex items-center gap-6">
-              <label className="text-sm font-medium">Publishing Status</label>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+              <label className="text-sm font-medium whitespace-nowrap">Publishing Status</label>
               <div className="flex bg-muted/50 rounded-full p-1 w-fit">
                 <button type="button" onClick={() => setStatus("draft")} className={`px-4 py-1 text-sm rounded-full ${status === 'draft' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}>Draft</button>
                 <button type="button" onClick={() => setStatus("published")} className={`px-4 py-1 text-sm rounded-full ${status === 'published' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}>Published</button>

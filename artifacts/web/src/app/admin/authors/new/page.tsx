@@ -109,9 +109,9 @@ export default function AdminAuthorsForm() {
 
   return (
     <div className="max-w-4xl">
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12">
         <h1 className="text-4xl font-serif text-primary">{id ? "Edit Author" : "Add New Author"}</h1>
-        <Link href="/admin/authors" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+        <Link href="/admin/authors" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors text-center sm:text-left">
           Cancel
         </Link>
       </div>

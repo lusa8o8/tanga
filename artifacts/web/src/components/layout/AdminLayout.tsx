@@ -20,12 +20,12 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-[100dvh] flex flex-col bg-background text-foreground">
       <header className="w-full border-b border-border py-4 px-6 md:px-12 bg-[hsl(var(--surface-footer))]">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/admin" className="flex items-center gap-3 text-primary hover:opacity-80 transition-opacity">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <Link href="/admin" className="flex items-center gap-3 text-primary hover:opacity-80 transition-opacity shrink-0">
             <Logo className="w-8 h-8" />
             <span className="font-serif font-medium text-lg">Taanga-Taanga Admin</span>
           </Link>
-          <nav className="flex items-center gap-6 text-sm font-medium">
+          <nav className="flex items-center gap-4 md:gap-6 text-sm font-medium overflow-x-auto w-full md:w-auto whitespace-nowrap pb-2 md:pb-0">
             <Link href="/admin/books" className="hover:text-primary/70 transition-colors">Manage Books</Link>
             <Link href="/admin/authors" className="hover:text-primary/70 transition-colors">Manage Authors</Link>
             <Link href="/admin/inquiries" className="hover:text-primary/70 transition-colors">Manage Inquiries</Link>

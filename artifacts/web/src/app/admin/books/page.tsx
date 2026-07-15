@@ -38,9 +38,9 @@ export default function AdminBooksList() {
 
   return (
     <div className="max-w-4xl">
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12">
         <h1 className="text-4xl font-serif text-primary">Manage Books</h1>
-        <Button asChild size="lg" className="rounded-none">
+        <Button asChild size="lg" className="rounded-none shrink-0 w-full sm:w-auto">
           <Link href="/admin/books/new">+ Add New Book</Link>
         </Button>
       </div>
@@ -80,17 +80,19 @@ export default function AdminBooksList() {
           <div className="text-muted-foreground py-8">Loading books...</div>
         ) : books.length > 0 ? (
           books.map(book => (
-            <div key={book.id} className="flex items-center gap-6 p-4 border border-border bg-background" data-testid={`row-book-${book.id}`}>
-              <div className="w-16 h-24 bg-muted flex-shrink-0">
-                {book.coverImageUrl && (
-                  <img src={book.coverImageUrl} className="w-full h-full object-cover" alt={book.title} />
-                )}
+            <div key={book.id} className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-4 border border-border bg-background" data-testid={`row-book-${book.id}`}>
+              <div className="flex items-center gap-4 w-full sm:w-auto flex-1 min-w-0">
+                <div className="w-16 h-24 bg-muted flex-shrink-0">
+                  {book.coverImageUrl && (
+                    <img src={book.coverImageUrl} className="w-full h-full object-cover" alt={book.title} />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-serif text-lg mb-1 truncate">{book.title}</div>
+                  <div className="text-muted-foreground text-sm truncate">{book.authorName}</div>
+                </div>
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="font-serif text-lg mb-1 truncate">{book.title}</div>
-                <div className="text-muted-foreground text-sm truncate">{book.authorName}</div>
-              </div>
-              <div className="flex items-center gap-6 shrink-0">
+              <div className="flex items-center justify-between sm:justify-end gap-6 shrink-0 w-full sm:w-auto border-t sm:border-0 border-border pt-4 sm:pt-0 mt-2 sm:mt-0">
                 <span
                   className="text-[10px] uppercase tracking-wider font-bold text-white px-3 py-1 rounded-full"
                   style={{ backgroundColor: book.status === "published" ? "hsl(var(--status-published))" : "hsl(var(--status-draft))" }}
@@ -98,16 +100,18 @@ export default function AdminBooksList() {
                 >
                   {book.status}
                 </span>
-                <Link href={`/admin/books/${book.id}/edit`} className="text-sm font-medium hover:opacity-70 transition-opacity" data-testid={`link-edit-${book.id}`}>
-                  Edit
-                </Link>
-                <button
-                  onClick={() => setDeleteTarget({ id: book.id, title: book.title })}
-                  className="text-sm text-muted-foreground hover:text-red-700 transition-colors"
-                  data-testid={`button-delete-${book.id}`}
-                >
-                  Delete
-                </button>
+                <div className="flex items-center gap-4">
+                  <Link href={`/admin/books/${book.id}/edit`} className="text-sm font-medium hover:opacity-70 transition-opacity" data-testid={`link-edit-${book.id}`}>
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => setDeleteTarget({ id: book.id, title: book.title })}
+                    className="text-sm text-muted-foreground hover:text-red-700 transition-colors"
+                    data-testid={`button-delete-${book.id}`}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))
