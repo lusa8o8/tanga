@@ -52,7 +52,7 @@ export default async function Home() {
         <img 
           src="/images/hero-bg-2.jpg" 
           alt="Spider web folklore illustration" 
-          className="w-full h-full object-cover object-top opacity-[0.85] mix-blend-multiply"
+          className="w-full h-full object-cover object-top opacity-[0.85] mix-blend-multiply scale-[1.05]"
         />
         {/* Massive fade at bottom to blend into the beige page body */}
         <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-background via-background/80 to-transparent"></div>
