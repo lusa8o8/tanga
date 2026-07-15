@@ -22,7 +22,7 @@ async function getLanguages() {
 async function getAuthorsSubset() {
   const snapshot = await adminDb.collection('authors')
     .where('featured', '==', true)
-    .limit(4)
+    .limit(3)
     .get();
   return snapshot.docs.map((doc: any) => ({ id: doc.id, ...(doc.data() as any) }));
 }
