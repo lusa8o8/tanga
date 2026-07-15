@@ -46,14 +46,18 @@ export default async function Home() {
     <div className="flex flex-col gap-20 md:gap-28">
       {/* Hero Section */}
       <section className="relative pt-8 md:pt-12">
-        {/* Experimental Background Texture */}
+        {/* Background Illustration */}
         <div 
-          className="absolute inset-0 overflow-hidden pointer-events-none select-none flex justify-end items-start opacity-[0.03]"
+          className="absolute inset-0 overflow-hidden pointer-events-none select-none opacity-60 mix-blend-multiply"
           aria-hidden="true"
         >
-          <div className="font-serif text-[12rem] lg:text-[18rem] leading-[0.75] text-primary text-right -mr-12 md:-mr-24 -mt-8 tracking-tighter whitespace-pre-wrap">
-            {hero.watermark?.replace(' / ', '\n') || "Heritage\nLanguage"}
-          </div>
+          <img 
+            src="/images/hero-bg.jpg" 
+            alt="Spider web folklore illustration" 
+            className="w-full h-full object-cover object-right md:object-center"
+          />
+          {/* A slight gradient fade at the bottom to transition into the next section smoothly */}
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#f4f2e9] to-transparent"></div>
         </div>
 
         <div className="max-w-2xl relative z-10">
