@@ -45,25 +45,28 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-20 md:gap-28">
       {/* Hero Section */}
-      <section className="relative pt-8 md:pt-12">
+      <section className="relative pt-16 md:pt-32 pb-24 md:pb-32 mb-12 -mt-16 md:-mt-24 w-[100vw] left-1/2 -translate-x-1/2 flex items-center min-h-[65vh] md:min-h-[80vh]">
         {/* Background Illustration */}
         <div 
-          className="absolute inset-0 overflow-hidden pointer-events-none select-none opacity-60 mix-blend-multiply"
+          className="absolute inset-0 overflow-hidden pointer-events-none select-none mix-blend-multiply z-0"
           aria-hidden="true"
         >
           <img 
             src="/images/hero-bg.jpg" 
             alt="Spider web folklore illustration" 
-            className="w-full h-full object-cover object-right md:object-center"
+            className="w-full h-full object-cover object-top opacity-[0.85]"
           />
           {/* A slight gradient fade at the bottom to transition into the next section smoothly */}
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#f4f2e9] to-transparent"></div>
+          <div className="absolute inset-x-0 bottom-0 h-48 md:h-64 bg-gradient-to-t from-background via-background/90 to-transparent"></div>
+          {/* Fade at top to blend below navbar gracefully */}
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background/30 to-transparent"></div>
         </div>
 
-        <div className="max-w-2xl relative z-10">
-          <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.15] mb-8">
-            {hero.headline || "Preserving Heritage, One Page at a Time."}
-          </h1>
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+          <div className="max-w-2xl mt-8 md:mt-0">
+            <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.15] mb-8">
+              {hero.headline || "Preserving Heritage, One Page at a Time."}
+            </h1>
           <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-sm">
             {hero.subHeadline || "Publishing books in Kiikaonde and Tonga that preserve language, culture, and history for future generations."}
           </p>
