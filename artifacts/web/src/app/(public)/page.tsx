@@ -78,7 +78,7 @@ export default async function Home() {
       <section className="border-t border-border pt-12 md:pt-16">
         <div className="flex flex-col md:grid md:grid-cols-12 gap-12 md:gap-8">
           <div className="md:col-span-5 flex flex-col items-center md:items-end text-center md:text-right order-first md:order-last">
-            <h2 className="text-4xl md:text-5xl font-serif text-primary mb-4 md:whitespace-nowrap">Featured Languages</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-primary mb-4 md:whitespace-nowrap">Featured Languages</h2>
             <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80">
               Browse by Language
             </span>
@@ -103,7 +103,7 @@ export default async function Home() {
       {/* Featured Books */}
       <section className="border-t border-border pt-24 md:pt-32 pb-8">
         <div className="mb-16">
-          <h2 className="text-5xl md:text-6xl font-serif text-primary mb-6">Curated Selection</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-primary mb-6">Curated Selection</h2>
           <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80 block">
             Featured Books
           </span>
@@ -140,7 +140,7 @@ export default async function Home() {
       <section className="border-t border-border pt-12 md:pt-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
           <div className="md:col-span-4 flex flex-col">
-            <h2 className="text-4xl md:text-5xl font-serif text-primary mb-4">Our Story</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-primary mb-4">Our Story</h2>
             <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80">
               A Legacy of Language
             </span>
@@ -164,7 +164,7 @@ export default async function Home() {
       {/* Meet the Authors */}
       <section className="border-t border-border pt-24 md:pt-32 pb-8 flex flex-col items-center">
         <div className="flex flex-col items-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-serif text-primary mb-6">Meet the Authors</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-primary mb-6">Meet the Authors</h2>
           <span className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground/80 block">
             Our Writers & Scholars
           </span>
