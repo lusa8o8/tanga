@@ -27,7 +27,17 @@ export function PublicLayout({ children, settings }: { children: React.ReactNode
       </main>
 
       <footer className="w-full bg-[hsl(var(--surface-footer))] py-20 md:py-32 mt-16 md:mt-24 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24 mb-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 mb-16">
+          <div>
+            <h4 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-6 text-primary/80">Navigation</h4>
+            <div className="text-muted-foreground text-sm flex flex-col gap-3">
+              <Link href="/catalog" className="hover:text-primary transition-colors duration-200">Catalog</Link>
+              <Link href="/authors" className="hover:text-primary transition-colors duration-200">Authors</Link>
+              <Link href="/about" className="hover:text-primary transition-colors duration-200">About</Link>
+              <Link href="/bulk-orders" className="hover:text-primary transition-colors duration-200">Bulk Orders</Link>
+              <Link href="/inquiry" className="hover:text-primary transition-colors duration-200">Contact</Link>
+            </div>
+          </div>
           <div>
             <h4 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-6 text-primary/80">Sales/Bulk Orders</h4>
             <div className="text-muted-foreground text-sm flex flex-col gap-3">
@@ -36,17 +46,17 @@ export function PublicLayout({ children, settings }: { children: React.ReactNode
             </div>
           </div>
           <div>
-            <h4 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-6 text-primary/80">Legal</h4>
-            <div className="text-muted-foreground text-sm flex flex-col gap-3">
-              <Link href="/privacy" className="hover:text-primary transition-colors duration-200">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-primary transition-colors duration-200">Terms of Service</Link>
-            </div>
-          </div>
-          <div>
             <h4 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-6 text-primary/80">General Contact</h4>
             <div className="text-muted-foreground text-sm flex flex-col gap-3">
               <p>{contact.generalEmail || "hello@taanga-taanga.com"}</p>
               <p>{contact.address || "3 Green Lane Kabulonga, P.O. Box 31981, Lusaka"}</p>
+            </div>
+          </div>
+          <div>
+            <h4 className="font-sans text-[11px] font-medium tracking-[0.2em] uppercase mb-6 text-primary/80">Legal</h4>
+            <div className="text-muted-foreground text-sm flex flex-col gap-3">
+              <Link href="/privacy" className="hover:text-primary transition-colors duration-200">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-primary transition-colors duration-200">Terms of Service</Link>
             </div>
           </div>
         </div>

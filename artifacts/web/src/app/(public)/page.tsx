@@ -44,40 +44,38 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-20 md:gap-28">
-      {/* Hero Section */}
-      <section className="relative pt-[calc(104px+4rem)] md:pt-[calc(104px+6rem)] pb-24 md:pb-32 mb-12 -mt-[calc(104px+4rem)] md:-mt-[calc(104px+6rem)] w-[100vw] left-1/2 -translate-x-1/2 flex items-center min-h-[65vh] md:min-h-[80vh]">
-        {/* Background Illustration */}
-        <div 
-          className="absolute inset-0 overflow-hidden pointer-events-none select-none mix-blend-multiply z-0"
-          aria-hidden="true"
-        >
-          <img 
-            src="/images/hero-bg.jpg" 
-            alt="Spider web folklore illustration" 
-            className="w-full h-full object-cover object-top opacity-[0.85]"
-          />
-          {/* A slight gradient fade at the bottom to transition into the next section smoothly */}
-          <div className="absolute inset-x-0 bottom-0 h-48 md:h-64 bg-gradient-to-t from-background via-background/90 to-transparent"></div>
-          {/* Fade at top to blend below navbar gracefully */}
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background/30 to-transparent"></div>
-        </div>
+      {/* Absolute Full-Bleed Background for the entire top of the page */}
+      <div 
+        className="absolute top-0 left-0 w-full h-[80vh] md:h-[90vh] overflow-hidden pointer-events-none select-none z-0"
+        aria-hidden="true"
+      >
+        <img 
+          src="/images/hero-bg-2.jpg" 
+          alt="Spider web folklore illustration" 
+          className="w-full h-full object-cover object-top opacity-[0.85] mix-blend-multiply"
+        />
+        {/* Massive fade at bottom to blend into the beige page body */}
+        <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+        {/* Slight fade at top to ensure header text readability if needed */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background/30 to-transparent"></div>
+      </div>
 
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="max-w-2xl mt-8 md:mt-0">
-            <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-serif text-primary leading-[1.15] mb-8">
-              {hero.headline || "Preserving Heritage, One Page at a Time."}
-            </h1>
-          <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-sm">
+      {/* Hero Section Content */}
+      <section className="relative z-10 pt-8 md:pt-16 pb-24 md:pb-32 mb-12 flex flex-col items-center text-center">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-serif text-primary leading-[1.1] mb-6 drop-shadow-sm">
+            {hero.headline || "Preserving Heritage, One Page at a Time."}
+          </h1>
+          <p className="text-lg md:text-xl text-primary/80 leading-relaxed mb-10 max-w-xl mx-auto font-medium">
             {hero.subHeadline || "Publishing books in Kiikaonde and Tonga that preserve language, culture, and history for future generations."}
           </p>
-          <div className="flex flex-wrap items-center gap-4">
-            <Button asChild size="lg" className="rounded-none px-8">
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Button asChild size="lg" className="rounded-none px-8 text-base h-14 shadow-md hover:shadow-lg transition-all">
               <Link href="/catalog">Browse the Catalog</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-primary/5 px-8">
+            <Button asChild size="lg" variant="outline" className="rounded-none border-primary text-primary hover:bg-primary/5 px-8 text-base h-14 bg-background/50 backdrop-blur-sm">
               <Link href="/bulk-orders">Inquire About Bulk Orders</Link>
             </Button>
-          </div>
           </div>
         </div>
       </section>
