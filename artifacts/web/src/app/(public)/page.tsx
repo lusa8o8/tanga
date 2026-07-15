@@ -78,6 +78,7 @@ export default async function Home() {
               <Link href="/bulk-orders">Inquire About Bulk Orders</Link>
             </Button>
           </div>
+          </div>
         </div>
       </section>
 
