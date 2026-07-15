@@ -6,7 +6,7 @@ export function PublicLayout({ children, settings }: { children: React.ReactNode
   const contact = settings?.contact || {};
   return (
     <div className="min-h-[100dvh] flex flex-col bg-background text-foreground">
-      <header className="w-full border-b border-border py-8 px-6 md:px-12">
+      <header className="w-full relative z-50 py-8 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-4 text-primary hover:opacity-75 transition-opacity duration-200">
             <Logo className="w-10 h-10" />

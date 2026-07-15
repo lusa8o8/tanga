@@ -45,7 +45,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-20 md:gap-28">
       {/* Hero Section */}
-      <section className="relative pt-16 md:pt-32 pb-24 md:pb-32 mb-12 -mt-16 md:-mt-24 w-[100vw] left-1/2 -translate-x-1/2 flex items-center min-h-[65vh] md:min-h-[80vh]">
+      <section className="relative pt-[calc(104px+4rem)] md:pt-[calc(104px+6rem)] pb-24 md:pb-32 mb-12 -mt-[calc(104px+4rem)] md:-mt-[calc(104px+6rem)] w-[100vw] left-1/2 -translate-x-1/2 flex items-center min-h-[65vh] md:min-h-[80vh]">
         {/* Background Illustration */}
         <div 
           className="absolute inset-0 overflow-hidden pointer-events-none select-none mix-blend-multiply z-0"
