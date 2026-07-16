@@ -29,9 +29,15 @@
         <h1 class="text-2xl sm:text-3xl font-serif font-bold mb-2 text-amber-900">Cover Cropper Tool</h1>
         <p class="text-sm sm:text-base text-gray-600 mb-6">Upload a full print-wrapper PDF (Back + Spine + Front). This tool will render it to an image and let you crop exactly the front cover to save as a web-ready JPEG.</p>
         
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Select Book Cover PDF</label>
-            <input type="file" id="pdf-upload" accept="application/pdf" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200 transition-colors">
+        <div class="mb-6 flex flex-col sm:flex-row gap-4">
+            <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Select Book Cover PDF</label>
+                <input type="file" id="pdf-upload" accept="application/pdf" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200 transition-colors">
+            </div>
+            <div class="w-full sm:w-32 hidden" id="page-selector-container">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Page</label>
+                <input type="number" id="page-input" min="1" value="1" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm px-3 py-2 border">
+            </div>
         </div>
 
         <!-- Workspace -->
@@ -66,7 +72,12 @@
         const btnCropJpg = document.getElementById('btn-crop-jpg');
         const btnCropPng = document.getElementById('btn-crop-png');
         const btnReset = document.getElementById('btn-reset');
+        const pageInput = document.getElementById('page-input');
+        const pageSelectorContainer = document.getElementById('page-selector-container');
+        
         let cropper = null;
+        let currentPdf = null;
+        let totalPages = 1;
 
         function resetCropBoxToDefault() {
             if (!cropper) return;
@@ -82,6 +93,55 @@
             });
         }
 
+        async function renderPdfPage(pageNum) {
+            if (!currentPdf) return;
+            if (pageNum < 1 || pageNum > totalPages) return;
+
+            loading.classList.remove('hidden');
+            imageToCrop.classList.add('hidden');
+            if (cropper) { cropper.destroy(); cropper = null; }
+
+            try {
+                const page = await currentPdf.getPage(pageNum);
+                
+                // Render at high resolution (scale 3)
+                const viewport = page.getViewport({ scale: 3.0 });
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                
+                const ctx = canvas.getContext('2d');
+                const renderContext = { canvasContext: ctx, viewport: viewport };
+                await page.render(renderContext).promise;
+
+                // Convert canvas to image for Cropper.js
+                imageToCrop.src = canvas.toDataURL('image/png');
+                loading.classList.add('hidden');
+                imageToCrop.classList.remove('hidden');
+
+                // Initialize Cropper
+                cropper = new Cropper(imageToCrop, {
+                    viewMode: 1,
+                    background: false,
+                    zoomable: false,
+                    ready() {
+                        resetCropBoxToDefault();
+                    }
+                });
+            } catch (err) {
+                alert("Error rendering PDF page: " + err.message);
+                loading.classList.add('hidden');
+            }
+        }
+
+        pageInput.addEventListener('change', (e) => {
+            const newPage = parseInt(e.target.value, 10);
+            if (newPage >= 1 && newPage <= totalPages) {
+                renderPdfPage(newPage);
+            } else {
+                e.target.value = 1; // reset if invalid
+            }
+        });
+
         uploadInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
@@ -90,6 +150,7 @@
             workspace.classList.remove('hidden');
             imageToCrop.classList.add('hidden');
             loading.classList.remove('hidden');
+            pageSelectorContainer.classList.add('hidden');
             if (cropper) { cropper.destroy(); cropper = null; }
 
             const fileReader = new FileReader();
@@ -97,35 +158,20 @@
                 const typedarray = new Uint8Array(this.result);
                 
                 try {
-                    const pdf = await pdfjsLib.getDocument(typedarray).promise;
-                    const page = await pdf.getPage(1);
+                    currentPdf = await pdfjsLib.getDocument(typedarray).promise;
+                    totalPages = currentPdf.numPages;
                     
-                    // Render at high resolution (scale 3)
-                    const viewport = page.getViewport({ scale: 3.0 });
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
+                    pageInput.max = totalPages;
+                    pageInput.value = 1;
                     
-                    const ctx = canvas.getContext('2d');
-                    const renderContext = { canvasContext: ctx, viewport: viewport };
-                    await page.render(renderContext).promise;
-
-                    // Convert canvas to image for Cropper.js
-                    imageToCrop.src = canvas.toDataURL('image/png');
-                    loading.classList.add('hidden');
-                    imageToCrop.classList.remove('hidden');
-
-                    // Initialize Cropper
-                    cropper = new Cropper(imageToCrop, {
-                        viewMode: 1,
-                        background: false,
-                        zoomable: false,
-                        ready() {
-                            resetCropBoxToDefault();
-                        }
-                    });
+                    if (totalPages > 1) {
+                        pageSelectorContainer.classList.remove('hidden');
+                    }
+                    
+                    await renderPdfPage(1);
 
                 } catch (err) {
-                    alert("Error rendering PDF: " + err.message);
+                    alert("Error loading PDF: " + err.message);
                     loading.classList.add('hidden');
                 }
             };

@@ -1,6 +1,6 @@
 import { getApps, initializeApp, cert } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, initializeFirestore } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
 import { MockAdminAuth, MockDbImpl, MockAdminStorage } from './mock-db';
 
@@ -27,7 +27,7 @@ if (isPlaceholder) {
         rawKey = rawKey.replace(/^["']|["']$/g, '').replace(/\\n/g, '\n');
       }
 
-      initializeApp({
+      const app = initializeApp({
         credential: cert({
           projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
           clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL || process.env.FIREBASE_CLIENT_EMAIL,
@@ -37,7 +37,8 @@ if (isPlaceholder) {
       });
       
       adminAuth = getAuth();
-      adminDb = getFirestore();
+      // Use initializeFirestore with preferRest to prevent Vercel gRPC cold-start hangs!
+      adminDb = initializeFirestore(app, { preferRest: true });
       adminStorage = getStorage();
     } catch (error) {
       console.error('Firebase Admin initialization error:', error);
