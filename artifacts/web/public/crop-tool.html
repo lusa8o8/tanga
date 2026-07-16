@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taanga-Taanga Cover Cropper Tool</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Cropper.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
+    
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+
+    <!-- Cropper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+
+    <style>
+        body { background-color: #f8f6f0; }
+        .cropper-container { max-height: 70vh; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-12 px-4 text-gray-800">
+
+    <div class="max-w-4xl w-full bg-white p-8 shadow-xl rounded-lg border border-gray-200">
+        <h1 class="text-3xl font-serif font-bold mb-2 text-amber-900">Cover Cropper Tool</h1>
+        <p class="text-gray-600 mb-8">Upload a full print-wrapper PDF (Back + Spine + Front). This tool will render it to an image and let you crop exactly the front cover to save as a web-ready JPEG.</p>
+        
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Select Book Cover PDF</label>
+            <input type="file" id="pdf-upload" accept="application/pdf" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200 transition-colors">
+        </div>
+
+        <!-- Workspace -->
+        <div id="workspace" class="hidden flex-col items-center">
+            <div class="w-full bg-gray-100 border border-gray-300 rounded overflow-hidden mb-6 flex justify-center items-center" style="min-h: 400px;">
+                <canvas id="pdf-canvas" class="hidden"></canvas>
+                <img id="image-to-crop" class="hidden max-w-full" />
+                <div id="loading" class="hidden text-gray-500 font-medium animate-pulse">Rendering PDF to high-res image...</div>
+            </div>
+
+            <div class="flex gap-4 w-full">
+                <button id="btn-crop" class="flex-1 bg-amber-800 hover:bg-amber-900 text-white font-bold py-3 px-4 rounded transition-colors shadow-md">
+                    Download Cropped Cover (JPEG)
+                </button>
+            </div>
+            <p class="text-xs text-gray-500 mt-3">*The crop box is automatically positioned over the right-side front cover. Adjust the edges to perfectly exclude the spine.</p>
+        </div>
+    </div>
+
+    <script>
+        const uploadInput = document.getElementById('pdf-upload');
+        const workspace = document.getElementById('workspace');
+        const canvas = document.getElementById('pdf-canvas');
+        const imageToCrop = document.getElementById('image-to-crop');
+        const loading = document.getElementById('loading');
+        const btnCrop = document.getElementById('btn-crop');
+        let cropper = null;
+
+        uploadInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Reset UI
+            workspace.classList.remove('hidden');
+            imageToCrop.classList.add('hidden');
+            loading.classList.remove('hidden');
+            if (cropper) { cropper.destroy(); cropper = null; }
+
+            const fileReader = new FileReader();
+            fileReader.onload = async function() {
+                const typedarray = new Uint8Array(this.result);
+                
+                try {
+                    const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                    const page = await pdf.getPage(1);
+                    
+                    // Render at high resolution (scale 3)
+                    const viewport = page.getViewport({ scale: 3.0 });
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    
+                    const ctx = canvas.getContext('2d');
+                    const renderContext = { canvasContext: ctx, viewport: viewport };
+                    await page.render(renderContext).promise;
+
+                    // Convert canvas to image for Cropper.js
+                    imageToCrop.src = canvas.toDataURL('image/png');
+                    loading.classList.add('hidden');
+                    imageToCrop.classList.remove('hidden');
+
+                    // Initialize Cropper
+                    cropper = new Cropper(imageToCrop, {
+                        viewMode: 1,
+                        background: false,
+                        zoomable: false,
+                        ready() {
+                            // Automatically set the crop box to the right half (front cover)
+                            // Assuming typical print wrapper: Back Cover (left), Spine (middle), Front Cover (right)
+                            // The front cover is roughly the right 48% of the image
+                            const containerData = this.cropper.getContainerData();
+                            const cropBoxWidth = containerData.width * 0.48; 
+                            const cropBoxHeight = containerData.height;
+                            
+                            this.cropper.setCropBoxData({
+                                left: containerData.width - cropBoxWidth, // Push to right edge
+                                top: 0,
+                                width: cropBoxWidth,
+                                height: cropBoxHeight
+                            });
+                        }
+                    });
+
+                } catch (err) {
+                    alert("Error rendering PDF: " + err.message);
+                    loading.classList.add('hidden');
+                }
+            };
+            fileReader.readAsArrayBuffer(file);
+        });
+
+        btnCrop.addEventListener('click', () => {
+            if (!cropper) return;
+            
+            // Get cropped canvas
+            const croppedCanvas = cropper.getCroppedCanvas({
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high',
+            });
+
+            // Convert to JPEG and download
+            croppedCanvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                // Use original filename but change extension
+                let baseName = uploadInput.files[0].name.replace('.pdf', '');
+                a.download = `${baseName}_front_cover.jpg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 'image/jpeg', 0.9);
+        });
+    </script>
+</body>
+</html>

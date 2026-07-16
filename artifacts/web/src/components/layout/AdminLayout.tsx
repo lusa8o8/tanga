@@ -29,6 +29,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             <Link href="/admin/books" className="hover:text-primary/70 transition-colors">Manage Books</Link>
             <Link href="/admin/authors" className="hover:text-primary/70 transition-colors">Manage Authors</Link>
             <Link href="/admin/inquiries" className="hover:text-primary/70 transition-colors">Manage Inquiries</Link>
+            <Link href="/admin/tools/cover-cropper" className="hover:text-primary/70 transition-colors text-amber-700">Cover Cropper</Link>
             <Link href="/admin/settings" className="hover:text-primary/70 transition-colors">Site Settings</Link>
             <button onClick={handleLogout} className="text-muted-foreground hover:text-foreground transition-colors">Sign Out</button>
           </nav>
