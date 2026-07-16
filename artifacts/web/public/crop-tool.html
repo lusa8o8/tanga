@@ -23,11 +23,11 @@
         .cropper-container { max-height: 70vh; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center py-12 px-4 text-gray-800">
+<body class="min-h-screen flex flex-col items-center py-4 sm:py-12 px-2 sm:px-4 text-gray-800">
 
-    <div class="max-w-4xl w-full bg-white p-8 shadow-xl rounded-lg border border-gray-200">
-        <h1 class="text-3xl font-serif font-bold mb-2 text-amber-900">Cover Cropper Tool</h1>
-        <p class="text-gray-600 mb-8">Upload a full print-wrapper PDF (Back + Spine + Front). This tool will render it to an image and let you crop exactly the front cover to save as a web-ready JPEG.</p>
+    <div class="max-w-4xl w-full bg-white p-4 sm:p-8 shadow-xl rounded-lg border border-gray-200">
+        <h1 class="text-2xl sm:text-3xl font-serif font-bold mb-2 text-amber-900">Cover Cropper Tool</h1>
+        <p class="text-sm sm:text-base text-gray-600 mb-6">Upload a full print-wrapper PDF (Back + Spine + Front). This tool will render it to an image and let you crop exactly the front cover to save as a web-ready JPEG.</p>
         
         <div class="mb-6">
             <label class="block text-sm font-medium text-gray-700 mb-2">Select Book Cover PDF</label>
@@ -36,18 +36,24 @@
 
         <!-- Workspace -->
         <div id="workspace" class="hidden flex-col items-center">
-            <div class="w-full bg-gray-100 border border-gray-300 rounded overflow-hidden mb-6 flex justify-center items-center" style="min-h: 400px;">
+            <div class="w-full bg-gray-100 border border-gray-300 rounded overflow-hidden mb-6 flex justify-center items-center" style="min-h: 300px; sm:min-h: 400px;">
                 <canvas id="pdf-canvas" class="hidden"></canvas>
                 <img id="image-to-crop" class="hidden max-w-full" />
                 <div id="loading" class="hidden text-gray-500 font-medium animate-pulse">Rendering PDF to high-res image...</div>
             </div>
 
-            <div class="flex gap-4 w-full">
-                <button id="btn-crop" class="flex-1 bg-amber-800 hover:bg-amber-900 text-white font-bold py-3 px-4 rounded transition-colors shadow-md">
-                    Download Cropped Cover (JPEG)
+            <div class="flex flex-col sm:flex-row gap-3 w-full">
+                <button id="btn-reset" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded transition-colors text-sm sm:text-base whitespace-nowrap">
+                    ↺ Reset
+                </button>
+                <button id="btn-crop-jpg" class="flex-1 bg-amber-800 hover:bg-amber-900 text-white font-bold py-3 px-2 rounded transition-colors shadow-md text-sm sm:text-base">
+                    Download (JPEG)
+                </button>
+                <button id="btn-crop-png" class="flex-1 bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 px-2 rounded transition-colors shadow-md text-sm sm:text-base">
+                    Download (PNG)
                 </button>
             </div>
-            <p class="text-xs text-gray-500 mt-3">*The crop box is automatically positioned over the right-side front cover. Adjust the edges to perfectly exclude the spine.</p>
+            <p class="text-xs text-gray-500 mt-4 text-center">*The crop box is automatically positioned over the right-side front cover. Adjust the edges to perfectly exclude the spine.</p>
         </div>
     </div>
 
@@ -57,8 +63,24 @@
         const canvas = document.getElementById('pdf-canvas');
         const imageToCrop = document.getElementById('image-to-crop');
         const loading = document.getElementById('loading');
-        const btnCrop = document.getElementById('btn-crop');
+        const btnCropJpg = document.getElementById('btn-crop-jpg');
+        const btnCropPng = document.getElementById('btn-crop-png');
+        const btnReset = document.getElementById('btn-reset');
         let cropper = null;
+
+        function resetCropBoxToDefault() {
+            if (!cropper) return;
+            const containerData = cropper.getContainerData();
+            const cropBoxWidth = containerData.width * 0.48; 
+            const cropBoxHeight = containerData.height;
+            
+            cropper.setCropBoxData({
+                left: containerData.width - cropBoxWidth, // Push to right edge
+                top: 0,
+                width: cropBoxWidth,
+                height: cropBoxHeight
+            });
+        }
 
         uploadInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
@@ -98,19 +120,7 @@
                         background: false,
                         zoomable: false,
                         ready() {
-                            // Automatically set the crop box to the right half (front cover)
-                            // Assuming typical print wrapper: Back Cover (left), Spine (middle), Front Cover (right)
-                            // The front cover is roughly the right 48% of the image
-                            const containerData = this.cropper.getContainerData();
-                            const cropBoxWidth = containerData.width * 0.48; 
-                            const cropBoxHeight = containerData.height;
-                            
-                            this.cropper.setCropBoxData({
-                                left: containerData.width - cropBoxWidth, // Push to right edge
-                                top: 0,
-                                width: cropBoxWidth,
-                                height: cropBoxHeight
-                            });
+                            resetCropBoxToDefault();
                         }
                     });
 
@@ -122,7 +132,7 @@
             fileReader.readAsArrayBuffer(file);
         });
 
-        btnCrop.addEventListener('click', () => {
+        function downloadCroppedImage(format, extension) {
             if (!cropper) return;
             
             // Get cropped canvas
@@ -131,20 +141,25 @@
                 imageSmoothingQuality: 'high',
             });
 
-            // Convert to JPEG and download
+            // Convert to requested format and download
             croppedCanvas.toBlob((blob) => {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
                 // Use original filename but change extension
                 let baseName = uploadInput.files[0].name.replace('.pdf', '');
-                a.download = `${baseName}_front_cover.jpg`;
+                a.download = `${baseName}_front_cover.${extension}`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-            }, 'image/jpeg', 0.9);
-        });
+            }, format, 0.9);
+        }
+
+        btnCropJpg.addEventListener('click', () => downloadCroppedImage('image/jpeg', 'jpg'));
+        btnCropPng.addEventListener('click', () => downloadCroppedImage('image/png', 'png'));
+
+        btnReset.addEventListener('click', resetCropBoxToDefault);
     </script>
 </body>
 </html>

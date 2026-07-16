@@ -7,21 +7,20 @@ export const metadata = {
 export default function CoverCropperPage() {
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-4 md:mb-8">
         <div>
-          <h1 className="text-3xl font-serif text-primary">Cover Cropper Tool</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-2xl md:text-3xl font-serif text-primary">Cover Cropper Tool</h1>
+          <p className="text-sm md:text-base text-muted-foreground mt-1">
             Extract front covers from full print wrappers to use on the website.
           </p>
         </div>
       </div>
 
-      <div className="flex-1 w-full min-h-[800px] border border-border rounded-lg overflow-hidden bg-white shadow-sm">
+      <div className="flex-1 w-full min-h-[600px] md:min-h-[800px] border border-border rounded-lg overflow-hidden bg-white shadow-sm">
         <iframe 
           src="/crop-tool.html" 
           title="Cover Cropper Tool"
-          className="w-full h-full border-0"
-          style={{ minHeight: '800px' }}
+          className="w-full h-full border-0 min-h-[600px] md:min-h-[800px]"
         />
       </div>
     </div>
