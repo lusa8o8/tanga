@@ -1,86 +1,55 @@
-# Taanga-Taanga Publishers Ltd — Local Workspace Guide
+# Taanga-Taanga Publishers Limited 📚🇿🇲
 
-A Next.js application for a Zambian local-language book press (Kiikaonde and Tonga/Chitonga titles) featuring a public site, bulk inquiry forms, and a custom admin panel.
+A modern, elegant web platform dedicated to publishing, curating, and preserving Zambian literature and languages (including Tonga, Kiikaonde, and more).
 
----
+## 🌟 Features
 
-## Local Setup & Development
+* **Beautiful Typography & Design:** A custom, responsive UI built with Tailwind CSS, featuring subtle micro-animations, glassmorphism, and optical typography alignments.
+* **Full-stack Next.js App:** Utilizing Next.js 14 App Router for blazing fast server-side rendering and SEO optimization.
+* **Admin Dashboard:** A secure, authenticated portal for publishers to manage:
+  * 📖 Books (with automatic cover image uploads)
+  * ✍️ Authors & Bios
+  * 🏷️ Categories & Languages
+* **Built-in Cover Cropper Tool:** An integrated PDF-to-Image tool that allows admins to upload full-print PDF book covers, instantly render them in the browser at high resolution, and crop out just the front cover for web usage.
+* **Native Firebase Integration:** Uses Firebase Firestore for NoSQL data storage, Firebase Auth for secure admin access, and Firebase Storage for handling all image/cover uploads seamlessly.
 
-This workspace is configured to use a portable Node.js runtime and the `pnpm` workspace system.
+## 🛠️ Technology Stack
 
-### Running the Dev Server
+* **Framework:** [Next.js 14](https://nextjs.org/) (React)
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+* **Database & Auth:** [Firebase](https://firebase.google.com/) (Firestore, Storage, Authentication)
+* **Deployment & Hosting:** [Vercel](https://vercel.com)
+* **PDF Processing:** PDF.js + Cropper.js
 
-Use the copy-pasteable commands below depending on your shell to navigate to the project directory, load Node.js, and start the development server.
+## 🚀 Getting Started (Local Development)
 
-#### Option A: In PowerShell
-```powershell
-# 1. Navigate to the project directory
-cd C:\Users\lusam\.gemini\antigravity\scratch\tanga
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/lusa8o8/tanga.git
+   cd tanga/artifacts/web
+   ```
 
-# 2. Add the portable Node.js directory to your PATH
-$env:PATH = "C:\Users\lusam\.gemini\antigravity\scratch\node;" + $env:PATH
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-# 3. Start the Next.js dev server (pnpm.cmd bypasses script execution policy restrictions)
-pnpm.cmd --filter web dev
-```
+3. **Set up Environment Variables:**
+   Create a `.env.local` file in the root directory and add your Firebase configuration (see `env_template.txt` for the required structure).
 
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
 
-#### Option B: In Command Prompt (CMD)
-```cmd
-:: 1. Navigate to the project directory
-cd C:\Users\lusam\.gemini\antigravity\scratch\tanga
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-:: 2. Add the portable Node.js directory to your PATH
-set PATH=C:\Users\lusam\.gemini\antigravity\scratch\node;%PATH%
+## 📦 Deployment
 
-:: 3. Start the Next.js dev server
-pnpm --filter web dev
-```
-
-The site will be live at: **`http://localhost:3000`**
-
----
-
-## Database Seeding
-
-To populate your live Google Firebase / Firestore project with the default admin user and initial catalog data (authors and books), execute the following command:
-
-**In PowerShell:**
-```powershell
-$env:PATH = "C:\Users\lusam\.gemini\antigravity\scratch\node;" + $env:PATH
-pnpm.cmd seed-db
-```
-
-**In CMD:**
-```cmd
-set PATH=C:\Users\lusam\.gemini\antigravity\scratch\node;%PATH%
-pnpm seed-db
-```
-
-
-## Firebase Mock / Offline Mode
-
-To support immediate, out-of-the-box development and testing without requiring real Firebase project credentials, a **graceful Firebase mock layer** is built-in.
-
-### How it works:
-- **Auto-detection**: When the environment variables in `.env` contain placeholder values (`REPLACE_ME`) or are missing, the mock layer activates automatically.
-- **Local Persistence**: A file-backed JSON database is created at `artifacts/web/mock-db.json` to persist any edits or additions of books and authors.
-- **Admin Authentication**:
-  - Sign in at `http://localhost:3000/admin/login` using the default credentials:
-    - **Email**: `admin@taanga-taanga.com`
-    - **Password**: `taanga2024admin`
-- **Offline Image Upload**: Image uploads in the admin panel are intercepted and converted into local base64 Data URLs, allowing uploaded cover images to render immediately on the site offline.
-
-### Swapping to Real Credentials:
-To run against real Firebase services, simply update the `.env` file in the project root with your live API keys and credentials. The application will automatically detect the presence of real keys and disable the mock layer.
+This project is configured for seamless deployment on Vercel. 
+1. Connect the GitHub repository to your Vercel account.
+2. Add all required Environment Variables in the Vercel project settings.
+3. Deploy! Vercel will automatically build and host the Next.js application.
 
 ---
-
-## Key Directories
-
-- `artifacts/web/` — Next.js web application (pages, api endpoints, and public assets)
-- `artifacts/web/mock-db.json` — Local database file used in mock mode
-- `artifacts/web/src/lib/mock-db.ts` — Contains the mock Firestore, Auth, and Storage SDK class definitions
-- `artifacts/web/src/lib/firebase-admin.ts` — Firebase Admin SDK setup (swaps between mock and real)
-- `artifacts/web/src/lib/firebase.ts` — Client-side Firebase SDK setup (swaps between mock and real)
-- `artifacts/web/src/lib/storage.ts` — Intercepts uploads to return local base64 URLs in mock mode
+*Preserving culture through literature.*
